@@ -1,0 +1,417 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{hyperref}
+
+\usepackage{mathematix}
+\usepackage[margin=1in,right=1in]{geometry}
+\usepackage{lipsum}
+\usepackage{enumerate}
+
+\renewcommand{\cov}{\operatorname{cov}}
+
+
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Risk measures and Risk-averse Optimisation},    % title
+    pdfauthor={Pantelis Sopasakis},     % author
+    pdfsubject={},   % subject of the document
+    pdfcreator={P. Sopasakis},   % creator of the document
+    pdfproducer={P. Sopasakis}, % producer of the document
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\title{Probability Cookbook}
+\author{Pantelis Sopasakis}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ This document is intended to serve as the white pages of general probability
+ theory and it can be used for a quick brush up or as a quick reference or 
+ cheat sheet, but not as primary tutorial material.
+\end{abstract}
+
+\section{General Probability Theory}
+
+\subsection{Probability spaces}
+
+\subsection{Random variables}
+\begin{enumerate}
+ \item 
+ \label{rv220000}
+       A real-valued random variable $X:\ofp \to (\Re, \mathcal{B}_\Re)$ is a measurable function $X$
+       from a probability space $\ofp$ to $\Re$, equipped with the Borel $\sigma$-algebra, that is, 
+       for every Borel set $B$, $X^{-1}(B)\in\F$.
+       
+ \item 
+ \label{rv221030}
+ Every nonnegative (real-valued) random variable $X$ on $(\Re_+, \mathcal{B}_{{\Re}_+})$ 
+ is written as 
+ \[
+  X = \int_0^{+\infty} 1_{X\geq t}\d t.
+ \]
+ Indeed, let 
+ \[
+    U(\omega;t) = 1_{X(\omega)>t} = \begin{cases}
+                                     1,&\text{if } X(\omega)>t\\
+                                     0,&\text{otherwise}
+                                    \end{cases}
+ \]
+ \item (Pushforward measure). Given measurable spaces $(\mathcal{X},\F)$ and $(\mathcal{Y}, \mathcal{G})$, 
+ a measurable mapping $f: X \to Y$ and a (probability) measure $\mu$ on $(\mathcal{X},\F)$, the \textit{pushforward} of $\mu$
+ is defined to be the measure $f∗(μ)$ on $(\mathcal{Y}, \mathcal{G})$ given by
+ \[
+  (f_*\mu)(B) = \mu(f^{-1}(B)) = \mu(\{\omega\mid f(\omega)\in B\}),
+ \]
+ for $B\in\mathcal{G}$.
+ \item (Change of variables). Let $F$ be a random variable on the probability space $\ofp$ and $F_*\prob$ 
+ is the pushforward measure. random variable $X$ is integrable with respect to the pushforward measure $F_*\prob$
+ if and only if $X\circ F$ is $\prob$-integrable. Then, the integrals coincide
+ \[
+  \int X \d(F_*\prob) = \int (X\circ F) \d \prob.
+ \]
+
+\end{enumerate}
+
+\subsection{Limits}
+\begin{enumerate}
+ \item (Lebesgue's monotone convergence theorem).
+      
+ \item 	(Lebesgue's Dominated Convergence Theorem). Let $X_n$ be real-valued RVs over $\ofp$. 
+	Suppose that $X_n$ converges pointwise to $X$ and is \textit{dominated} by a 
+	$Y\in\mathcal{L}_1\ofp$, that is $|X_n|\leq Y$ $\prob$-a.s for all $n\in\N$. 
+	Then, $X\in\mathcal{L}_1\ofp$
+	and
+	\[
+	 \lim_n \E[|X_n-X|] = 0,
+	\]
+        which implies
+        \[
+         \lim_n \E[X_n] = \E[X].
+        \]
+
+ \item 	(Fatou's lemma). Let $X_n\geq 0$ be a sequence of random variables. 
+	Then, 
+	\[
+	\E[\liminf_n X_n] \leq  \liminf_n \E[X_n].
+	\]
+ \item 	(Fatou's lemma with varying measures). For a sequence of nonnegative random variables $X_n\geq 0$ over $\ofp$,
+	and a sequence of (probability) measures $\mu_n$ which converge strongly to a (probability)
+	measure $\mu$ (that is, $\mu_n(A)\to\mu(A)$ for all $A\in\F$), we have
+	\[
+	 \E_\mu[\liminf_n X_n]\leq \liminf_n \E_{\mu_n}[ X_n]
+	\]
+
+ \item 	(Reverse Fatou's lemma). Let $X_n\geq 0$ be a sequence of nonnegative random variables over $\ofp$ and
+	assume there is a $Y\in\mathcal{L}_1\ofp$ so that $X_n\leq Y$. Then
+	\[ 
+	 \limsup_n \E[X_n] \leq \E[\limsup_n X_n]
+	\]
+ \item (Integrable lower bound). 	
+	Let $X_n$ be a sequence of random variables over $\ofp$. Suppose, there exists a
+	$Y\geq 0$ such that $X_n\geq -Y$ for all $n\in\N$. Then,
+	\[
+	\E[\liminf_n X_n] \leq  \liminf_n \E[X_n].
+	\]
+\end{enumerate}
+
+
+\subsection{The Radon-Nikodym Theorem}
+\begin{enumerate}
+ \item (Absolute continuity).
+       Let $(\mathcal{X}, \mathscr{G})$ be a measurable space and $\mu$ and $\nu$ two measures on it.
+       We say that $\nu$ is \textit{absolutely continuous} with respect to $\mu$ if
+       for all $A\in\mathscr{G}$, $\nu(A)=0$ whenever $\mu(A)=0$. We denote this by $\nu\ll\mu$.
+ \item (Radon-Nikodym). Let $(\mathcal{X}, \mathscr{G})$ be a measurable space, let $\nu$ be a \textit{$\sigma$-finite}
+       measure on $(\mathcal{X}, \mathscr{G})$ which is {absolutely continuous} with respect 
+       to a measure $\mu$ on $(\mathcal{X}, \mathscr{G})$. Then, there is a measurable function $f:\mathcal{X}\to[0,\infty)$
+       such that for all $A\in \mathcal{G}$
+       \[
+        \nu(A) = \int_A f \d \mu.
+       \]
+      This function is denoted by $f=\frac{\d\nu}{\d \mu}$.
+ \item (Linearity). Let $\nu$, $\mu$ and $\lambda$ be $\sigma$-finite measures on $(\mathcal{X}, \mathscr{G})$ and $\nu\ll\lambda$, $\mu\ll\lambda$.
+       Then
+       \[
+        \frac{\d(\nu+\mu)}{\d \lambda} = \frac{\nu}{\d \lambda} + \frac{\nu}{\d \lambda},\ \lambda\text{-a.e.}
+       \]
+ \item (Chain rule). If $\nu\ll\mu\ll\lambda$,
+ \[
+  \frac{\d\nu}{\d\lambda} = \frac{\d\nu}{\d\mu} \frac{\d\mu}{\d\lambda},\ \lambda\text{-a.e.} 
+ \]
+ \item (Inverse). If $\nu\ll\mu$ and $\mu\ll\nu$, then
+ \[
+  \frac{\d \mu}{\d \nu} = \left( \frac{\d \nu}{\d \mu}\right)^{-1},\ \nu\text{-a.e.}
+ \]
+ \item (Change of measure).
+ If $\mu\ll\lambda$ and $g$ is a $\mu$-integrable function, then
+ \[
+  \int_{\mathcal{X}} g \d \mu = \int_{\mathcal{X}} g \frac{\d \mu}{\d \lambda}\d \lambda.
+ \]
+ \item (Change of variables in integration). This was addressed using the pushforward. 
+ \[
+  \E[g(X)] = \int g\circ X\d\prob = \int_\Re g \d(X_*\prob).
+ \]
+ If the measure $\d(X_*\prob)$ is absolutely continuous with respect to the Lebesgue 
+ measure $\mu$ (on $(\Re, \mathcal{B}_\Re)$, then, the Radon-Nikodym derivative $f_X\dfn \frac{\d(X_*\prob)}{\d \mu}$,
+ $f:\Re\to\Re$ exists. Then
+ \[
+  \E[g(X)] = \int_\Re g \d(X_*\prob) = \int_\Re g f_X \d\mu = \int_\Re g(\tau)f_X(\tau)\d \tau.
+ \]
+
+\end{enumerate}
+
+
+
+
+\subsection{Probability distribution}
+\begin{enumerate} 
+ \item 
+ \label{rv221088}
+ The cumulative distribution function of a random variable $X$ on a space
+ $\mathcal{L}_p\ofp$ is $F_X(x) = \prob[X\leq x]$ for $x\in\Re$. The inverse cumulative
+ distribution of $X$ is $F_X^{-1}(p)$ for $p\in[0,1]$ is defined as 
+ $F_X^{-1}=\inf\{x\in\Re: F_X(x) \geq p\}$. 
+ 
+ \item 
+ \label{rv221089}
+ The probability distribution of a random variable $X$ with values in $(\mathcal{X},\mathscr{G})$,
+ is the pushforward measure $X_*\prob$ on $(\mathcal{X},\mathscr{G})$ which is 
+ a probability measure on $(\mathcal{X},\mathscr{G})$ with $X_*\prob = \prob X^{-1}$.
+ 
+ 
+ \item
+ \label{rv221137}
+ We associate with $F_X:\Re\to[0,1]$ the measure $\mu$ which is defined on 
+ the $p$-system $\{(-\infty,x]\}_{x\in\Re}$ as $\mu((-\infty, x]) = F_X(x)$.
+ \item
+ \label{rv231132}
+ Properties of the cumulative and the inverse cumulative distributions. The notation
+ $X\sim Y$ means that $X$ and $Y$ have the same cumulative distribution, that is 
+ $F_X = F_Y$.
+    \begin{enumerate}[i.]
+      \item If $Y\sim U[0,1]$, then $F_X^{-1}(Y) \sim X$.
+      \item $F_X$ is c\`adl\`ag
+      \item $x_1<x_2 \Rightarrow F_X(x_1) \leq F_X(x_2)$
+      \item $\prob[X>x] = 1 - F_X(x)$
+      \item $\prob[\{x_1 < X \leq x_2\}] = F_X(x_2) - F_X(x_1)$
+      \item $\lim_{x\to-\infty}F_X(x) = 0$, $\lim_{x\to\infty}F_X(x) = 1$
+      \item $F_X^{-1}(F_X(x)) \leq x$
+      \item $F_X(F_X^{-1}(p)) \geq p$
+      \item $F_X^{-1}(p) \leq x \Leftrightarrow p \leq F_X(x)$
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Probability density function}
+\begin{enumerate}
+ \item 
+    The probability density function $f_X$ of a random variable $X:\ofp\to (\mathcal{X},\mathscr{G})$
+    with respect to a measure $\mu$ on $(\mathcal{X},\mathscr{G})$ is the Radon-Nikodym derivative
+    \[
+     f_X = \frac{\d (X_*\prob)}{\d \mu},
+    \]
+    which exists provided that $X_*\prob \ll \mu$, and $f$ is measurable and $\mu$-integrable. Then,
+    \begin{align*}
+     \prob[X\in A] = \int_A X \d \prob
+                   = \int_{X^{-1}A}\d \prob
+                   = \int_A f_X \d \mu.
+    \end{align*}
+  \item If $X$ is a real-valued random variable and its range ($\Re$) is taken with the 
+        Borel $\sigma$-algebra, then 
+        \begin{align*}
+         \prob[X\leq x] = \int_{(-\infty, x]}X\d \prob
+         = \int_{\{\omega\in\Omega: X(\omega) \leq x\}}\d \prob
+         = \int_{-\infty}^x f_X\d \mu
+        \end{align*}
+
+ 
+\end{enumerate}
+
+
+\section{Expectation}
+\begin{enumerate}  
+ \item 
+ \label{gx1312}
+ Because of item~\ref{rv221030}, for $X\geq 0$ nonnegative 
+ \begin{align*}
+  \E[X] &= \int_{0}^{+\infty} X \d \prob\\
+        &= \int_{0}^{+\infty} \int_0^{+\infty} 1_{X\geq t}\d t \d \prob\\
+        &= \int_{0}^{+\infty} \int_0^{+\infty} 1_{X\geq t} \d \prob \d t
+ \end{align*}
+ and we use the fact that 
+ \[
+  \int_{0}^{+\infty} 1_{X>t}\d \prob = \prob[X>t],
+ \]
+ so
+\[
+ \E[X] = \int_0^\infty \prob[X>t]\d t.
+\]
+The function $S(t) = \prob[X>t] = 1-\prob[X\leq t]$ is called the \textit{survival function} 
+of $X$.
+\end{enumerate}
+
+
+\section{Conditional Expectation}
+
+
+\section{Inequalities}
+\begin{enumerate}
+ \item (H\"older's inequality). $\E[|XY|] \leq \|X\|_p \|Y\|_q $; where $p$, $q$ are conjugate exponents
+ \item (Gaussian tail inequality). Let $X\sim N(0,1)$. Then,
+ \[ 
+  \prob[|X|>\epsilon] \leq \frac{2e^{-\epsilon^2/2}}{\epsilon}.
+ \]
+ \item (Markov's inequality). Let $X\geq 0$, integrable. For all $t>0$, 
+ \[ 
+ \prob[X>t]\leq \frac{\E[X]}{t}.
+ \]
+ \item (Chebyshev's inequality). Let $X$ have finite expectation $\mu$ and finite variance $\sigma^2$. Then
+ \[
+  \prob[|X-\mu|\geq t] \leq \frac{\sigma^2}{t^2}.
+ \]
+\item (Hoeffding's lemma). Let $a\leq X\leq b$ be an RV with finite expectation $\mu=\E[X]$.
+Then
+\[
+ \E[e^{tX}] \leq e^{t\mu}e^{\frac{t^2(b-a)^2}{8}}.
+\]
+\item (Corollary of Hoeffding's lemma). Let $X$ be such that $e^{tX}$ is integrable for $t\geq 0$. Then
+\[
+ \prob[X>\epsilon]\leq \inf_{t\geq 0}e^{-t\epsilon}\E[e^{tX}].
+\]
+\item (Hoeffding's inequality \#1). Let $X_1,X_2,\ldots, X_n$ be independent random variables in $[0,1]$. Define 
+\[
+ \bar{X} = \frac{X_1 + X_2 + \ldots + X_n}{n}.
+\]
+Then,
+\[
+ \prob[\bar{X} - \E[\bar{X}] \geq t] \leq e^{-2nt^2}.
+\]
+\item (Hoeffding's inequality \#2). Let $X_1,X_2,\ldots, X_n$ be independent random variables and $X_i\in [a_i, b_i]$.
+Let $\bar{X}$ be as above and let $r_i = b_i - a_i$. Then
+\[
+ \prob[\bar{X} - \E[\bar{X}] \geq t] \leq \exp\left({-\frac{2n^2t^2}{\sum_{i=1}^{n} r_i^2}}\right),
+\]
+and
+\[
+ \prob[ |\bar{X} - \E[\bar{X}]| \geq t] \leq 2 \exp\left({-\frac{2n^2t^2}{\sum_{i=1}^{n} r_i^2}}\right).
+\]
+\item (Jensen's inequality). Let $X\in\mathcal{L}_1\ofp$, $f:\Re\to\Re$ convex. Then
+\[
+ f(\E[X])\leq \E[f(X)].
+\]
+
+
+\end{enumerate}
+
+\section{Convergence}
+\subsection{Convergence of measures}
+\begin{enumerate}
+ \item (Strong convergence). Let $\{\mu_k\}_{k\in\N}$ be a sequence of measures defined on a 
+       measurable space $(\mathcal{X}, \mathscr{G})$. We say that the sequence converges strongly
+       to a measure $\mu$ if
+       \[
+        \lim_k \mu_k(A) = \mu(A),
+       \]
+      for all $A\in\mathscr{G}$.
+ \item (Total variation convergence). The total variation distance between two measures $\mu$ and 
+       $\nu$ on a measurable space $(\mathcal{X}, \mathscr{G})$ is defined as
+       \begin{align*}
+        d_{\mathrm{TV}}(\mu,\nu) &= \|\mu-\nu\|_{\mathrm{TV}} \\
+          &\dfn \sup \left\{\int_{\mathcal{X}}f\d\mu - \int_{\mathcal{X}}f \d \nu,\ f:\mathcal{X}\to[-1,1] \text{ measurable} \right\}\\
+          &=2\sup_{A\in\mathscr{G}}|\mu(A) - \nu(A)|
+       \end{align*}
+      A sequence of measures $\{\mu_k\}_{k\in\N}$ converges in the total variation
+      to a measure $\mu$ if $d_{\mathrm{TV}}(\mu_k(A)-\mu(A))\to 0$ as $k\to\infty$
+      for all $A\in\mathscr{G}$.
+ \item (Weak convergence). The sequence of measures $\{\mu_k\}_{k\in\N}$ is said to converge 
+       in the weak sense, denoted by $\mu_k \rightharpoonup \mu$, if any of the conditions 
+       of the \textit{Portmanteau Theorem} hold; these are
+       \begin{enumerate}[i.]
+        \item $\E_{\mu_k} f\to \E_{\mu} f$ for all bounded continuous functions $f$
+        \item $\E_{\mu_k} f\to \E_{\mu} f$ for all bounded Lipschitz functions $f$
+        \item $\limsup_k\E_{\mu_k} f \leq \E_{\mu} f$ for every upper semicontinuous $f$ bounded from above
+        \item $\liminf_k\E_{\mu_k} f \geq \E_{\mu} f$ for every lower semicontinuous $f$ bounded from below
+        \item $\limsup \mu_k(C) \leq \mu(C)$ for all closed set $C\subseteq \mathcal{X}$
+        \item $\liminf \mu_k(O) \geq \mu(O)$ for all open set $O\subseteq \mathcal{X}$
+       \end{enumerate}
+ \item (Strong $\nRightarrow$ TV).
+\end{enumerate}
+
+\subsection{Convergence of RVs}
+\begin{enumerate}
+ \item (Almost sure convergence).
+ \item (Convergence in probability).
+ \item (Convergence in $\mathcal{L}_p\ofp$).
+ \item (Convergence in distribution, not in probability).
+ \item (Convergence in $\mathcal{L}^2$, not in $\mathcal{L}^p$ for $p>2$).
+ \item (Convergence in probability, but not almost surely).
+\end{enumerate}
+
+
+\subsection{Tail events and 0-1 Laws}
+\begin{enumerate}
+ \item (Borel-Cantelli lemma). Let $\{E_n\}_{n\in\N}$ be a sequence of events in $\ofp$. If
+ \[
+  \sum_{n\in\N}\prob[E_n] < \infty,
+ \]
+ Then,
+ \[
+  \prob[\limsup_n E_n] = 0.
+ \]
+
+ \item (Second Borel-Cantelli lemma). Let $\{E_n\}_{n\in\N}$ be a sequence of \textit{independent} events in $\ofp$. If
+ \[
+  \sum_{n\in\N}\prob[E_n] = \infty,
+ \]
+ Then
+ \[
+  \prob[\limsup_n E_n] = 1.
+ \]
+ \item (Counterpart of the Borel-Cantelli lemma). 
+ Let $\{E_n\}_{n\in\N}$ be a nested increasing sequence of events in $\ofp$, that is 
+ $E_k\subseteq E_{k+1}$ and let $E_k^c$ denote the complement of $E_k$.
+ Infinitely many $E_k$ occur with probability $1$ if and only if there is an increasing sequence 
+ $t_k\in\N$ such that
+ \[
+  \sum_k \prob[A_{t_{k+1}}\mid A_{t_k}^c]  = \infty.
+ \]
+
+ \item (Kolmogorov's zero-one law).
+ 
+ \item (L\'evy's zero-one law). Let $\Ff=\{\F_k\}_{k\in\N}$ be any filtration of $\F$ on $\ofp$ and
+ $X\in\mathcal{L}_1\ofp$. Let $\F_\infty$ be the minimum $\sigma$-algebra generated by $\Ff$. Then
+ \[
+  \E[X\mid \F_k] \to \E[X\mid \F_\infty], 
+ \]
+ both in $\mathcal{L}_1\ofp$ and $\prob$-a.s.
+
+ 
+
+\end{enumerate}
+
+
+
+\subsection{Martingale convergence}
+%\section{Copulas}
+%\lipsum[1]
+\section{Paradoxes and Fun Facts}
+\begin{enumerate}
+ \item (Equal in distribution, nowhere equal). 
+ \item (Finite mean, infinite variance).
+ \item (Open cover of rationals, finite Lebesque measure).
+ \item (Product of integrable RVs, not integrable).
+ \item ($\|f\|_\infty = \lim_p \|f\|_p$).
+\end{enumerate}
+
+\end{document}
