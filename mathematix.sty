@@ -1,0 +1,124 @@
+\ProvidesPackage{mathematix}[2017/03/22 Custom Preable (Mathematics)]
+
+\RequirePackage{kvoptions}
+\RequirePackage{kvsetkeys}
+
+\DeclareBoolOption[false]{ieee}
+
+\SetupKeyvalOptions{
+	family=mathematix,
+	prefix=mathematix@,
+	setkeys=\kvsetkeys,
+}
+\ProcessKeyvalOptions*\relax
+
+\RequirePackage[mathscr]{euscript}
+\RequirePackage{amssymb,amsmath,mathtools}
+\RequirePackage[usenames,dvipsnames]{color}
+\RequirePackage{hhline}
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+\RequirePackage{graphicx}
+\RequirePackage{array,multirow}
+\RequirePackage{float}
+\RequirePackage{cite}
+\RequirePackage{multicol}
+\RequirePackage{nicefrac}
+\RequirePackage{soul,color} % Used to highlight text in yellow in comments            
+
+% If the option `ieee` is enabled, then the following block 
+% is activated (use it for IEEE documents)
+\ifmathematix@ieee
+	\RequirePackage{authblk}
+	\RequirePackage{flushend}
+	\RequirePackage[hmargin=19.1mm,vmargin=19.1mm]{geometry}
+	\PackageWarningNoLine{mathematix}{IEEE option enabled: (authblk)}
+\fi
+
+
+%% TIKZ
+\RequirePackage{pgfplots}
+\RequirePackage{tikz}
+	\usetikzlibrary{external}
+	\tikzsetexternalprefix{Pics/Tikz/}
+	\tikzexternalize
+
+\newcommand\includetikz[2][]{{{%
+	\pgfkeys{/pgf/images/include external/.code={\includegraphics[#1]{##1}}}%
+	\tikzsetnextfilename{#2}%
+	\input{./Tikz/#2.tex}%
+}}}
+
+
+% MATHEMATICAL SYMBOLS            
+\newcommand\mymathbb[1]
+  { {\rm I\mathchoice{\hspace*{-2pt}}{\hspace*{-2pt}}
+    {\hspace*{-1.75pt}}{\hspace*{-1.7pt}}#1}   }        % \mymathbb 	IR, IN, etc
+      
+\renewcommand{\Re}{\mymathbb R}				% \Re 		real numbers
+\newcommand{\N}{\mymathbb N}				% \N 		naturals
+\newcommand{\NN}{\mathcal N}				% \NN 		Caligraphic N (set of modes)
+\newcommand{\Sp}{{\mathcal S}_{\scriptscriptstyle +}}	% \Sp 		symmetric positive semi-definite matrices
+\newcommand{\Spp}{{\mathcal S}_{\scriptscriptstyle ++}}	% \Spp 		symmetric positive definite matrices
+\newcommand{\barre}{\overline{\Re}}            		% \barre 	extended reals
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\Af}{\mathfrak{A}}				% \Af 		admissibility set
+\newcommand{\Df}{\mathfrak{D}}				% \Df 		class of distributions
+\newcommand{\Ff}{\mathfrak{F}} 				% \Ff 		filtration
+\newcommand{\F}{\mathscr{F}} 				% \F 		sigma-algebra
+\newcommand{\cov}{\mathcal{C}}				% \cov		cover of a mode
+\newcommand{\AVAR}{\mathrm{AV@R}}			% \AVAR 	AVAR (no subscript)
+\newcommand{\AVARa}{\mathrm{AV@R}_{\alpha}} 		% \AVARa 	AVAR at level \alpha
+\newcommand{\dfn}{{}\mathop{\mathrel{:}=}{}}		% \dfn 		defined as
+\newcommand{\nfd}{{}\mathop{=\mathrel{:}}{}}		% \nfd 		inverted '\dfn'
+\newcommand{\E}{\mymathbb{E}}				% \E 		expectation operator
+\newcommand{\Z}{\mathscr{Z}}				% \Z 		a space of random variables
+\newcommand{\T}{\mathbf{T}} 				% \T 		DP operator T
+\renewcommand{\S}{\mathbf{S}}				% \S
+\newcommand{\U}{\mathscr{U}} 				% \U
+\newcommand{\prob}{\mathrm{P}}				% \prob 	probability 
+\newcommand{\ofp}{(\Omega,\F,\prob)}			% \ofp 		probability space (Omega, F, P)
+\newcommand{\<}{\langle}				% \< 		inner product (left)
+\renewcommand{\>}{\rangle}				% \> 		inner product (right)
+\newcommand{\sstar}{\scriptstyle\star}			% \sstar	small star
+\newcommand{\ssstar}{\scriptscriptstyle\star}		% \ssstar	very small star
+\newcommand{\plus}[1]
+      {\left[{}#1{}\right]_{\scriptscriptstyle +}}	% \plus{} 	plus operatro ([ ]_+)
+\newcommand{\smallmat}[1]
+  {\left[\begin{smallmatrix}#1\end{smallmatrix}\right]} % small matrices
+  
+\newcommand\bm[1]{%
+    \mathchoice{%
+	    \text{\boldmath{\(\displaystyle #1\)}}%
+    }{
+	    \text{\boldmath{\(\textstyle #1\)}}%
+    }{
+	    \text{\boldmath{\(\scriptstyle #1\)}}%
+    }{
+	    \text{\boldmath{\(\scriptscriptstyle #1\)}}%
+    }%
+}
+
+
+% OPERATORS  
+\DeclareMathOperator*{\argmin}{\arg\!\min}		% \argmin 	argmin
+\DeclareMathOperator*{\esssup}{ess\!\sup}		% \esssup 	essential supremum
+\DeclareMathOperator*{\essmax}{ess\!\max}  		% \essmax 	essential maximum
+\DeclareMathOperator*{\minimize}{minimize} 		% \minimize	minimize
+\DeclareMathOperator{\proj}{proj}			% \proj 	projection operator
+\DeclareMathOperator{\dom}{dom}				% \dom 		domain of a function
+\DeclareMathOperator{\conv}{conv}			% \conv 	convex hull
+\DeclareMathOperator{\blkdiag}{blkdiag}			% \blkdiag 	block diagonal
+\DeclareMathOperator{\child}{ch}			% \child 	child of a node
+\DeclareMathOperator{\anc}{anc}				% \anc 		ancestor node  
+  
+  
+  
+% THEOREMS
+%   and similar environments  
+\newtheorem{thm}{Theorem}[section]			% thm 		Theorem
+\newtheorem{cor}[thm]{Corollary}			% cor 		Corollary
+\newtheorem{lem}[thm]{Lemma}				% lem 		Lemma
+\newtheorem{proposition}[thm]{Proposition}		% proposition	Proposition
+\newtheorem{assumption}[thm]{Assumption}		% assumption 	Assumption
+\newtheorem{definition}[thm]{Definition}		% definition 	Definition
