@@ -1,0 +1,9 @@
+*.log
+*.aux
+*.auxlock
+*~
+*.toc
+*.snm
+*backup
+*.out
+Uncorrelated.pdf
