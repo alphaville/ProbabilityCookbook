@@ -18,7 +18,7 @@
     pdfmenubar=true,        % show Acrobat’s menu?
     pdffitwindow=false,     % window fit to page when opened
     pdfstartview={FitH},    % fits the width of the page to the window
-    pdftitle={Risk measures and Risk-averse Optimisation},    % title
+    pdftitle={Probability Theory Cookbook},    % title
     pdfauthor={Pantelis Sopasakis},     % author
     pdfsubject={},   % subject of the document
     pdfcreator={P. Sopasakis},   % creator of the document
@@ -58,7 +58,8 @@
  \item (d-system) A collection $\mathcal{D}$ of subsets of $X$ is called a d-system or a Dynkin class if 
        (i) $X\in\mathcal{D}$,
        (ii) $A\setminus B\in\mathcal{D}$ whenever $A,B\in\mathcal{D}$ and $A\supseteq B$,
-       (iii) $A\in\mathcal{D}$ whenever $A_n\in \mathcal{D}$ and $A_n \uparrow A$.
+       (iii) $A\in\mathcal{D}$ whenever $A_n\in \mathcal{D}$ and $A_n \uparrow A$ (meaning, 
+       $A_{k}\subseteq A_{k+1}$ and $\bigcup_{k\in\N}A_k=A$).
        
  \item (p-system). A collection of sets $\mathcal{P}$ in $X$ is called a p-system
        if $A\cap B\in \mathcal{P}$ whenever $A,B\in\mathcal{P}$.
@@ -66,7 +67,7 @@
  \item A collection of sets is a $\sigma$-algebra if and only if it is both a p- and a d-system.
  
  \item (Smallest $\sigma$-algebra). Let $\H$ be a collection of sets in $X$. The smallest collection of sets
-       which contains $\H$ and is a $\sigma$-algebra is denoted by $\sigma(\H)$.
+       which contains $\H$ and is a $\sigma$-algebra exists and is denoted by $\sigma(\H)$.
  
  \item (Monotone class theorem). If a d-system $\mathcal{D}$ contains a p-system $\mathcal{P}$, then is also contains $\sigma(\mathcal{P})$.
  
@@ -89,9 +90,10 @@
  \item \label{mps1311960}
       (Properties of measures). The following hold:
       \begin{enumerate}[(i)]
-       \item $\mu(\varnothing)=0$ [Indeed, $\mu(A) = \mu(A\cup \varnothing) = \mu(A) + \mu(\varnothing)$ for all $A\in\F$]
-       \item $A\subseteq B$ imples $\mu(A) \leq \mu(B)$ [Indeed, $\mu(B) = \mu(A\cup (B\setminus A))$]
-       \item For all $A_n\in\F$, $\mu(\bigcup_n A_n) \leq \sum_n \mu(A_n)$
+       \item (Empty set is negligible). $\mu(\varnothing)=0$ [Indeed, $\mu(A) = \mu(A\cup \varnothing) = \mu(A) + \mu(\varnothing)$ for all $A\in\F$]
+       \item (Monotonicity). $A\subseteq B$ imples $\mu(A) \leq \mu(B)$ [Indeed, $\mu(B) = \mu(A\cup (B\setminus A))$]
+       \item (Boole's inequality). For all $A_n\in\F$, $\mu(\bigcup_n A_n) \leq \sum_n \mu(A_n)$
+       \item (Sequential continuity). If $A_n\uparrow A$, then $\mu(A_n)\uparrow \mu(A)$.
       \end{enumerate}
 
  \item (Equality of measures). Let $\mu,\nu$ be two measures on a measurable space $(X,\F)$ and let $\G$ 
@@ -123,6 +125,9 @@
  
  \item (Lebesgue measurable sets). The completion of the Lebesgue measure defines the class of Lebesgue-measurable
        sets. 
+             
+ \item (Negligible boundary). If a set $C\subseteq \Re^n$ has a boundary whose Lebesgue measure is $0$, then 
+       $C$ is Lebesgue measurable.
 \end{enumerate}
 
 \subsection{Random variables}\label{sec:random_variables}
@@ -155,15 +160,18 @@
        for every Borel set $B$, $X^{-1}(B)\in\F$.              
        
  \item \label{rv221030}
- Every nonnegative (real-valued) random variable $X$ on $(\Re_+, \B_{{\Re}_+})$ 
- is written as 
- \[
-  X(\omega) = \int_0^{+\infty} 1_{X(\omega)\geq t}\,\d t.
- \]
+      Every nonnegative (real-valued) random variable $X$ on $(\Re_+, \B_{{\Re}_+})$ 
+      is written as 
+      \[
+        X(\omega) = \int_0^{+\infty} 1_{X(\omega)\geq t}\,\d t.
+      \]
 
+ \item (Increasing functions).  Every increasing function $f:\Re\to\barre$ is Borel-measurable.
+ 
+ \item (Semicontinuous functions). 
  \item (Pushforward measure). Given measurable spaces $(\mathcal{X},\F)$ and $(\mathcal{Y}, \mathcal{G})$, 
  a measurable mapping $f: X \to Y$ and a (probability) measure $\mu$ on $(\mathcal{X},\F)$, the \textit{pushforward} of $\mu$
- is defined to be the measure $f∗(μ)$ on $(\mathcal{Y}, \mathcal{G})$ given by
+ is defined to be a measure $f∗(\mu)$ on $(\mathcal{Y}, \mathcal{G})$ given by
  \[
   (f_*\mu)(B) = \mu(f^{-1}(B)) = \mu(\{\omega\mid f(\omega)\in B\}),
  \]
@@ -306,21 +314,28 @@
 
 \subsection{Probability distribution}
 \begin{enumerate} 
- \item 
- \label{rv221088}
- The cumulative distribution function of a random variable $X$ on a space
+ 
+ \item (Probability distribution). Let $X:\ofp \to (Y, \G)$ be a random variable. The measure
+ \[
+  F_X(A) = \prob[X\in A] = \prob[\{\omega\in\Omega\mid X(\omega) \in A\}] = \prob[X^{-1}A] = (X_*\prob)(A),
+ \]
+ is called the \textit{probability distribution} of $X$ and it is a measure . Note that for all $A\in\G$, $X^{-1}A\in\F$
+ since $X$ is measurable. 
+ \item \label{rv221088}
+ (Probability distribution of real-valued random variables).
+ The \textit{probability distribution} or \textit{cumulative distribution function} of a random variable $X$ on a space
  $\mathcal{L}_p\ofp$ is $F_X(x) = \prob[X\leq x]$ for $x\in\Re$. The inverse cumulative
  distribution of $X$ is $F_X^{-1}(p)$ for $p\in[0,1]$ is defined as 
  $F_X^{-1}=\inf\{x\in\Re: F_X(x) \geq p\}$. 
  
- \item 
+ \item (Pushforward).
  \label{rv221089}
  The probability distribution of a random variable $X$ with values in $(\mathcal{X},\mathscr{G})$,
  is the pushforward measure $X_*\prob$ on $(\mathcal{X},\mathscr{G})$ which is 
  a probability measure on $(\mathcal{X},\mathscr{G})$ with $X_*\prob = \prob X^{-1}$.
  
  
- \item
+ \item 
  \label{rv221137}
  We associate with $F_X:\Re\to[0,1]$ the measure $\mu$ which is defined on 
  the $p$-system $\{(-\infty,x]\}_{x\in\Re}$ as $\mu((-\infty, x]) = F_X(x)$.
@@ -428,13 +443,19 @@ theorem offers some further insight.
        \[
         \bigotimes_{a\in A} \F_a \dfn \sigma\left( \{\pi_a^{-1}(E_a);a\in A, E_a\in \F_a\}\right)
        \]
+       This is the smallest $\sigma$-algebra on the product space which renders all projections measurable
+       (compare to the definition of the \textit{product topology} which is the smallest topology on 
+       the product space which renders the projections \textit{continuous}).
        
  \item (Measurability of epigraphs). Let $f:(X,\F)\to\barre$ be a measurable proper function. Its epigraph, that is
        the set $\epi f \dfn \{(x,\alpha)\in X\times \Re {}\mid{} f(x) \leq \alpha\}$ and its hypograph, that is
        the set $\hyp f \dfn \{(x,\alpha) \in X\times \Re {}\mid{} f(x) \geq \alpha\}$ are measurable in the product
        measure space $(X\times \Re, \F\otimes \B_\Re)$.
        
- \item (Countable product $\sigma$-algebras). If $A$ is countable, the product $\sigma$-algebra       
+ \item (Measurability of graph). The graph of a measurable function $f:(X,\F,\mu)\to\Re$ is a Lebesgue-measurable set 
+       with Lebesgue measure zero.
+       
+ \item (Countable product of $\sigma$-algebras). If $A$ is countable, the product $\sigma$-algebra       
        is generated by the products of measurable sets $\{\prod_{a\in A}E_a; E_a\in \F_a\}$.
        
  \item (Product measures). Let $(\mathcal{X},\F,\mu)$ and $(\mathcal{Y},\mathcal{G},\nu)$ be two measure spaces.
@@ -579,7 +600,8 @@ theorem offers some further insight.
  \item (Properties of conditional expectations). 
        The conditional expectation has the following properties:
        \begin{enumerate}[(i)]
-	\item (Monotonicity). $X\leq Y \Rightarrow \ce{X} \leq \ce{Y}$
+	\item \label{tp01} (Monotonicity). $X\leq Y \Rightarrow \ce{X} \leq \ce{Y}$
+	\item (Positivity).  $X\geq 0 \Rightarrow \ce{X} \geq 0$ [Set $Y=0$ in~\ref{tp01}]. 
 	\item (Linearity). For $a,b\in\Re$, $\ce{aX+bY}=a\ce{X} + b \ce{Y}$
 	\item (Monotone convergence). $X_n\geq 0$, $X_n \uparrow X$ implies $\ce{X_n}\uparrow \ce{X}$
 	\item (Fatou's lemma). For $X_n\geq 0$, $\ce{\liminf_n X_n}\leq \liminf_n \ce{X_n}$
@@ -593,6 +615,23 @@ theorem offers some further insight.
 	      \[
 	      f(\ce{X})\leq \ce{f(X)}.
 	      \]
+        \item (Law of total expectation). For any $\sigma$-algebra $\H \subseteq \F$,
+	      \[
+	       \E[\ce{X}] = \E[X].
+	      \]
+        \item (Tower property). For two $\sigma$-algebras $\H_1$ and $\H_2$ with $\H_1\subseteq \H_2$,	      
+	      \[
+	       \E[\E[X {}\mid{} \H_1] {}\mid{} \H_2] = \E[\E[X {}\mid{} \H_2] {}\mid{} \H_1] = \E[X {}\mid{} \H_1].
+	      \]
+        \item (Tower property with $X$ being $\H_i$-measurable). Let $\H_1\subseteq \H_2$ be two $\sigma$-algebras. 
+	      If $X$ is $\H_1$-measurable, then it is also $\H_2$-measurable.
+	    
+
+        \item If $X$ is $\H$-measurable then
+	      \[
+	       \ce{X} = X.
+	      \]
+
        \end{enumerate}
        %
        %
@@ -706,6 +745,12 @@ and
         \item $\limsup \mu_k(C) \leq \mu(C)$ for all closed set $C\subseteq \mathcal{X}$
         \item $\liminf \mu_k(O) \geq \mu(O)$ for all open set $O\subseteq \mathcal{X}$
        \end{enumerate}
+ \item (Tightness). A sequence of measures $(\mu_n)_n$ is called \textit{tight} if for every $\epsilon>0$
+       there is a compact set $K$ so that $\mu_n(K)>1-\epsilon$ for all $n\in\N$.
+       
+ \item (Prohorov's Theorem). If $(\mu_n)_n$ is tight, then every subsequence of it has a further subsequence
+       which is weakly convergent. 
+       
  \item (Strong $\nRightarrow$ TV).
 \end{enumerate}
 
@@ -736,7 +781,19 @@ and
 
 \subsection{Convergence in probabiltiy}       
 \begin{enumerate}
- \item (Convergence in probability).
+ \item (Convergence in probability). We say that the stochastic process $(X_n)_n$ converges to a random variable $X$
+       in probability if for every $\epsilon>0$,
+       \[
+        \lim_n \prob[|X_n-X|>\epsilon] = 0.
+       \]
+       We denote $X_n \overset{p}{\to} X$.
+ \item (Continuous mapping theorem). Let $X_n \overset{p}{\to} X$ and $g$ be a continuous mapping. Then
+       $g(X_n) \overset{p}{\to} g(X)$.
+ \item (Metrizability). Convergence in probability defines a topology which is metrizable via the \textit{Ky Fan metric}
+      \[
+	d(X,Y) = \inf \{\epsilon>0 {}\mid{} \prob[|X-Y|>\epsilon]\leq \epsilon\} = \E[\min(|X-Y|,1)].
+      \]
+
 \end{enumerate} 
  
 \subsection{Convergence in $\mathcal{L}_p$}
@@ -746,6 +803,9 @@ and
 
 \subsection{Relationships among modes of convergence}
 \begin{enumerate}
+ \item (Convergence in probability, but not almost surely). 
+       Let $(X_n)_n$ be a sequence of independent random variables and $X_n=1$ with probability $1/n$
+       and $0$ with probability $1-1/n$.
  \item (Convergence in distribution, not in probability).
  \item (Convergence in $\mathcal{L}^2$, not in $\mathcal{L}^p$ for $p>2$).
  \item (Convergence in probability, but not almost surely).
@@ -807,11 +867,33 @@ and
 
 
 
-\subsection{Martingale convergence}
+\section{Stochastic Processes}
+\subsection{General}
+\begin{enumerate}
+ \item (Stochastic process). Let $\T \subseteq \barre$ (e.g., $T=\N$ or $T=\barre$). A stochastic process is 
+       a sequence/net $(X_n)_{n\in \T}$ of random variables on a probability space $\ofp$.
+       
+ \item (Filtrations). A filtration is an increasing sequence of sub-$\sigma$-algebras of $\F$. The space 
+       $(\Omega, \F, (\F_t)_{t\in \T}, \prob)$ is called a filtered probability space. The filtration 
+       $\F_t = \sigma(\{X_s; s\in \T, s\leq t\})$ is called the filtration \textit{generated by $(X_n)_{n\in \T}$}.
+       We say that $(X_n)_n$ is adapted to a filtration $(\F_n)_n$ if for all $n\in \T$, $X_n$ is $\F_n$-measurable.
+       
+ \item (Stopping times). Let $(\F_n)_n$ be a filtration on $\ofp$ and define $\overline{\T} \dfn \T \cup \{+\infty\}$.
+       A random variable $T: \Omega \to \overline{\T}$ is called a stopping time if
+       \[
+        \{\omega {}\mid{} T(\omega) \leq t\} \in \F_t,
+       \]
+      for all $t\in \T$. This is equivalent to requiring that the process $Z_t = 1_{T \leq t}$ is adapted to $(\F_t)_{t\in \T}$.
+\end{enumerate}
+
+\subsection{Martingales}
+
+
 %\section{Copulas}
 %\lipsum[1]
 \section{Paradoxes and Fun Facts}
 \begin{enumerate}
+ \item (Lebesgue measure of closure). In $\Re$, take the \textit{modified Cantor set} $C$. Then, $\lambda(E) < \lambda(\bar{E})$. 
  \item (Open cover of rationals, finite Lebesgue measure).
  \item (Product of integrable RVs, not integrable).
  \item ($\|f\|_\infty = \lim_p \|f\|_p$).
