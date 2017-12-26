@@ -48,7 +48,7 @@
 \tableofcontents
 
 \begin{abstract}
- This document is intended to serve as the white pages of general probability
+ This document is intended to serve as a collection of important results in general probability
  theory and it can be used for a quick brush up or as a quick reference or 
  cheat sheet, but not as primary tutorial material.
 \end{abstract}
@@ -136,6 +136,13 @@
              
  \item (Negligible boundary). If a set $C\subseteq \Re^n$ has a boundary whose Lebesgue measure is $0$, then 
        $C$ is Lebesgue measurable.
+       
+ \item (Independent events). Let $E_1,E_2$ be two events from $\ofp$; we say that $E_1$ and $E_2$ are \textit{independent}
+       if $\prob[E_1\cap E_2] = \prob[E_1]\prob[E_2]$.
+       
+ \item (Independent $\sigma$-algebras). We say that two $\sigma$-algebras $\F_1$ and $\F_2$ on $\Omega$ 
+       are independent if for any $E_1\in \F_1$ and $E_2\in\F_2$, $E_1$ and $E_2$ are independent.
+       Note that $E_1\cap E_2$ is a member of the $\sigma$ algebra $E_1 \wedge E_2$.
 \end{enumerate}
 
 \subsection{Random variables}\label{sec:random_variables}
@@ -230,6 +237,70 @@
 \end{enumerate}
 
 \subsection{Limits}
+\subsubsection{Limits of sequences of events}
+\begin{enumerate}
+ \item (Nested sequences and probabilities). Let $(E_n)_n$ be a nonincreasing sequence of events ($E_n\supseteq E_{n+1}$ for all $n\in\N$). 
+       Then $\lim_n \prob[E_n]$ exists and 
+       \[
+        \prob\left[\bigcap_n E_n\right] = \lim_n \prob[E_n].
+       \]
+       If $(E_n)_n$ is a nondecreasing sequence ($E_n \subseteq E_{n+1}$ for all $n\in\N$), then
+       \[
+        \prob\left[\bigcup_n E_n\right] = \lim_n \prob[E_n].
+       \]
+
+
+ \item (Limits inferior). For a sequence of events $E_n$, the \textit{limit inferior} of $(E_n)_n$
+       is denoted by $\liminf_n E_n$ and is defined as 
+       \[
+        \liminf_n E_n = \bigcup_{n\in \N}\bigcap_{m\geq n}E_n = \{x:\ x\in E_n\ \text{for all but finitely many } n\in \N\}.
+       \]
+ \item (Limit superior). The \textit{limit superior} of $(E_n)_n$, $\limsup_n E_n$, is
+       \[
+        \limsup_n E_n = \bigcap_{n\in \N}\bigcup_{m\geq n}E_n = \{x:\ x\in E_n\ \text{infinitely often} \}.
+       \]
+ \item (Limits of complements). The limit (super/inferior) of a sequence of complements is the complement of the limit
+	\begin{align*}
+	 \liminf_n E_n^c &= (\limsup_n E_n)^c,\\
+	 \limsup_n E_n^c &= (\liminf_n E_n)^c.
+	\end{align*}
+
+ \item (Relationship between limits). It is
+       \[
+        \liminf_n E_n \subseteq \limsup_n E_n.
+       \]
+ \item (Probabilities of $\liminf E_n$ and $\limsup E_n$). The sets $\liminf_n E_n$ and $\limsup_n E_n$ are measurable and 
+ \[
+  \prob[\liminf_n E_n] \leq \liminf_n \prob[E_n] \leq \limsup_n \prob[E_n] \leq \prob[\limsup_n E_n].
+ \]
+ 
+ \item (A result reminiscent of Baire's category theorem). Let $(E_n)_n$ be a sequence of almost sure events. Then
+       $\prob[\cap_n E_n] = 1$.
+
+ \item (Borel-Cantelli lemma). Let $(E_n)_n$ be a sequence of events over $\ofp$. The following hold
+ \begin{enumerate}[i.]
+  \item If $\sum_{n=1}^{\infty}\prob[E_n]<\infty$, then $\prob[\limsup_n E_n] = 0$
+  \item If $(E_n)_n$ are independent events such that $\sum_{n=1}^{\infty}\prob[E_n]=\infty$, then
+        $\prob[\limsup_n E_n] = 1$.
+ \end{enumerate}
+ 
+ \item (Corollary: Borel 0-1 law). If $(E_n)_n$ is a sequence of independent events, 
+       then $\prob[\limsup_n E_n]\in\{0,1\}$ (according to the summability of $(\prob[E_n])_n$).
+
+ \item (Kochen-Stoone lemma). Let $(E_n)_n$ be a sequence of events. Then,
+ \[
+  \prob[\limsup_n E_n] \geq \limsup_n \frac{\left(\sum_{k=1}^n \prob[A_k]\right)^2}{\sum_{k=1}^{n}\sum_{j=1}^{n}\prob[A_k\cap A_j]}
+ \]
+ 
+ \item (Corollary of Kochen-Stoone's lemma). If for $i\neq j$, $E_i$ and $E_j$ are either independent 
+       or $\prob[E_i\cap E_j] \leq \prob[E_i]\prob[E_j]$ and $\sum_{n=1}^{\infty}\prob[E_n]=\infty$,
+       then $\prob[\limsup_n E_n] = 1$.
+
+\end{enumerate}
+
+
+
+\subsubsection{Limits of sequences of random variables}
 \begin{enumerate}
  \item (Lebesgue's monotone convergence theorem). Let $(f_n)_n$ be an increasing sequence of 
        nonnegative Borel functions and let $f \dfn \lim_n f_n$ (in the sense $f_n\to f$ pointwise a.e.). 
@@ -457,7 +528,12 @@
                = \int_\Re \iota(x) f_X(x) \d\mu
                = \int_\Re x f_X(x) \d x.
         \]
-  \item (Expectation of transformation).
+  \item (Distribution of transformation). Let $g:\Re\to\Re$ be a strictly increasing function. Let $X$ be a real-valued random variable with probability density function $f_X$ and let $Y(\omega) = g(X(\omega))$. Then
+  \begin{align*}
+   F_Y(y) &= F_X(g^{-1}(y)),\\
+   f_Y(y) &= f_X(g^{-1}(y))\frac{\partial g^{-1}(y)}{\partial y}.
+  \end{align*}
+
 \end{enumerate}
 
 \subsection{Decomposition of measures}
@@ -564,6 +640,15 @@ theorem offers some further insight.
         \int_{\mathcal{Y}} \int_{\mathcal{X}} h(x,y)\d\mu(x) \d\nu(y) = 
         \int_{\mathcal{X}\times\mathcal{Y}} h \d(\mu\times \nu)
        \]
+       
+ \item (Consequence of Fubini's theorem). Let $X$ be a nonnegative random variable. Let $E=\{(\omega, x): 0 \leq x\leq X(\omega)\}$.
+       Then, $X(\omega) = \int_{0}^{\infty}1_{E}(\omega, x)\d x$.
+       \begin{align*}
+        \E[X] = \int_{\Omega}X\d\prob &= \int_{\Omega}\int_{0}^{\infty}1_{E}(\omega, x)\d x\d \prob\\
+                                      &= \int_{0}^{\infty} \int_{\Omega} 1_{E}(\omega, x)\d \prob \d x\\
+                                      &= \int_{0}^{\infty} \prob[X\geq x]\d x.
+       \end{align*}
+
 \end{enumerate}
 
 \subsection{Transition Kernels}
@@ -605,8 +690,6 @@ theorem offers some further insight.
        \item $\E[f(X)] = \E[f(Y)]$ for all positive Borel functions	
       \end{enumerate}
 
- 
- 
 \end{enumerate}
 
 
@@ -639,9 +722,9 @@ theorem offers some further insight.
  Then $\tau = \E[X]$ minimizes $f$ and the minimum value is $\mathrm{Var}[X]$.
  \item Let $X$ be a real-valued random variable. Then,
  \[
-  \sum_{n=1}^{\infty}\prob[|X|\geq n] \leq \E[X] \leq 1+ \sum_{n=1}^{\infty}\prob[|X|\geq n].
+  \sum_{n=1}^{\infty}\prob[|X|\geq n] \leq \E[|X|] \leq 1+ \sum_{n=1}^{\infty}\prob[|X|\geq n].
  \]
- It is $\E[|X|]<\infty$ if and only if this series converges.
+ It is $\E[|X|]<\infty$ if and only if the above series converges.
  \item If $X$ takes positive integer values, then
  \[
   \E[X] = \sum_{n=1}^{\infty}\prob[X\geq n]
@@ -657,10 +740,10 @@ theorem offers some further insight.
        for $x\geq x_m$. For $a\leq 1$, $X$ has infinite mean and variance. For $a>1$, its
        mean is $\E[X]=\frac{ax_m}{a-1}$ and infinite variance.
        
- \item (Absolute bounded a.s. $\Leftrightarrow$ Bounded moments)~[\ref{cite:Ambrosio2013}].
+ \item (Absolutely bounded a.s. $\Leftrightarrow$ Bounded moments)~[\ref{cite:Ambrosio2013}].
 	Let $X$ be a random variable on $\ofp$. The following are equivalent:
 	\begin{enumerate}[i.]
-	  \item $X$ is almost surely absolutely bounded (i.e., $\prob[|X|\leq M]=1$)
+	  \item $X$ is almost surely absolutely bounded (i.e., there is $M\geq 0$ such that $\prob[|X|\leq M]=1$)
 	  \item $\E[|X|^k]\leq M^k$, for all $k\in \N_{\geq 1}$
 	\end{enumerate}
 
@@ -939,7 +1022,7 @@ theorem offers some further insight.
        $\mathrm{supp}(\mu)=\{\omega\in\Omega: \mu(N_x)>0, \text{ for all } N_\omega\in \tau, N_\omega\ni \omega\}$.}.
        Then, there exist random variables $(X_n)_n$ and $X$ on a common probability space such that the distribution 
        of $X_n$ is $\mu_n$, the distribution of $X$ is $\mu$ and $X_n\to X$ almost surely.
-       
+        
  \item (Strong $\nRightarrow$ TV).
 \end{enumerate}
 
@@ -947,7 +1030,8 @@ theorem offers some further insight.
 \begin{enumerate}
  \item (Almost sure convergence). A sequence of random variables $(X_n)_n$ is said to converge \textit{almost surely}
        if the sequence $(X_n(\omega))_n$ converges (somewhere) for almost every $\omega$. It converges almost surely to $X$
-       if $\lim_n X_n(\omega) = X(\omega)$ for almost every omega.
+       if $\lim_n X_n(\omega) = X(\omega)$ for almost every $\omega$.
+              
        
  \item (Uniqueness almost surely). If $X_n \to X$ a.s. and $X_n \to Y$ a.s., then $X=Y$ a.s.
  
@@ -967,7 +1051,7 @@ theorem offers some further insight.
        converging to $0$ so that 
        \[
         \sum_{n\in\N}\prob[|X_n-X|>\epsilon_n] < \infty.
-       \]
+       \]     
        
  \item (Cauchy criterion). The sequence $\{X_n\}_n$ is convergent almost surely if and only if
        $\lim_{m,n\to \infty}|X_n-X_m|\to 0$ almost surely.
@@ -976,7 +1060,7 @@ theorem offers some further insight.
        The concept of almost sure convergence does not come from a topology on the space 
        of random variables. This means there is no topology on the space of random variables 
        such that the almost surely convergent sequences are exactly the converging sequences 
-       with respect to that topology. In particular, there is no metric of almost sure convergence.
+       with respect to that topology. In particular, there is no metric of almost sure convergence.        
               
 \end{enumerate}
 
@@ -1011,8 +1095,8 @@ theorem offers some further insight.
        
  \item (Sum of independent variables). Let $(X_n)_n$ be a sequence of independent random 
        variables and let $(S_n)_n$ be a sequence defined as $S_n = X_1 + \ldots + X_n$.
-       Then $S_n$ converges almost surely if and only if it converges in probability.
-       
+       Then $S_n$ converges almost surely if and only if it converges in probability.      
+ 
  \item (Convergence of pairs). If $X_n\to X$ in probability and $Y_n\to Y$ in probability, then
        $(X_n, Y_n)\to (X,Y)$ in probability.
        
@@ -1035,10 +1119,27 @@ theorem offers some further insight.
  \item (Convergence $\mathcal{L}_1$ under uniform integrability). If $X_n \to X$ in probability and $(X_n)_n$ is uniformly
        integrable, then $X_n\to X$ in $\mathcal{L}_1$.
  \item (In $\mathcal{L}_s\ofp$ $\Rightarrow$ in $\mathcal{L}_p\ofp$, for $s>p\geq 1$). 
+ \item (Scheff\'e's theorem). Let $X_n\in\mathcal{L}_1$, $X\in\mathcal{L}_1$ and $X_n\to X$ almost surely. The following are 
+       equivalent:
+       \begin{enumerate}[i.]
+        \item $\E[|X_n|] \to \E[|X|]$,
+        \item $\E[|X_n - X|]\to  0$.
+       \end{enumerate} 
  \item (Convergence in $\mathcal{L}_p$ for all $p\in[1,\infty)$ but not in $\mathcal{L}_\infty$).
        Let $X$ be a random variable on $\Omega=\N$ which follows the Poisson distribution ($\prob[X=k]=\frac{e^{-\lambda}\lambda^k}{k!}$, $\lambda>0$).
        Define the sequence $X_k = 1_{\{X=k\}}$. Then $\|X_k\|_\infty=1$.
- \item (In $\mathcal{L}_p$ $\Rightarrow$ in probability).
+ \item (Vitali's theorem).
+       Suppose that $X_n\in\mathcal{L}_p$, $p\in[1,\infty)$ and $X_n\to X$ in probability.
+       The following are equivalent
+       \begin{enumerate}[i.]
+        \item $\{X_n\}_n$ is uniformly integrable
+        \item $X_n\to X$ in $\mathcal{L}_p$
+        \item $\E[|X_n|^p] \to \E[|X|^p]$
+       \end{enumerate}
+
+ \item (In $\mathcal{L}_p$ $\Rightarrow$ in probability). If $(X_n)_n$ converges to $X$ in $\mathcal{L}_p$, for 
+       any $p\in [1,\infty]$ it also converges to $X$ in probability. 
+       
  \item (Almost surely $\not\Rightarrow$ in $\mathcal{L}_p$). On $([0,1], \mathcal{B}_{[0,1]}, \lambda)$ take $X_n=n 1_{[0,1/n]}$.
        Then, for all $p\in[1,\infty]$ we have $\|X_n\|_p=1$, but the sequence converges almost surely to $0$.
 \end{enumerate}
@@ -1061,15 +1162,24 @@ theorem offers some further insight.
 \item (Almost sure convergence). If $X_n\to X$ in distribution, we may find a probability space $\ofp$
       and random variables $Y$ and $(Y_n)_n$ so that $Y_n$ is equal in distribution to $X_n$,
       $Y$ is equal in distribution to $X$ and $Y_n\to Y$ almost surely.
-
+      
+\item (Scheff\'e's theorem for density functions).\footnote{\url{http://www.math.chalmers.se/~serik/WeakConv/C-space.pdf}}
+Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
+      with respect to a measure $\mu$. If $f_n \to f$ $\mu$-a.s., then $\prob_n \to \prob$ in the total 
+      variation metric and, as a result,  $\prob_n \to \prob$ weakly.
+      
 \item (Convergence in probability $\Rightarrow$ in distribution). If $\{X_n\}_n$ converges in probability,
       then it converges in distribution to the same limit.
       
 \item (In distribution $\not\Rightarrow$ in probability). There are sequences which converge in distribution,
       but not in probability. For example: On the space $([0,1], \mathcal{B}_{[0,1]},\lambda)$, let $X_{2n}(\omega)=\omega$
       and $X_{2n-1}(\omega) = 1-\omega$. Then all $X_k$ have the same distribution, but the sequence does not 
-      converge in probability.
-
+      converge in probability. As a second example, the sequence $X_n=X$ where $X$ follows the Bernoulli distribution
+      with parameter $\frac{1}{2}$, converges in distribution to $1-X$, but not in probability.
+      
+\item (Polya-Cantelli lemma)\footnote{\url{http://dept.stat.lsa.umich.edu/~moulib/ch2.pdf}}. If $X_n\to X$ in distribution, $F_n$ are the distribution function of $X_n$ and 
+      $X$ has the \textit{continuous} distribution function $F$, then $\|F_n - F\|_\infty \dfn \sup_{x}|F_n(x) - F(x)| \to 0$
+      as $n\to\infty$.
 \end{enumerate}
 
 
@@ -1084,31 +1194,18 @@ theorem offers some further insight.
  
  \item (Tail $\sigma$-algebra). Let $(\F_n)_{n}$ be a sequence of sub-$\sigma$-algebras of $\F$.
        The $\sigma$-algebra $T_n\dfn \bigvee_{m>n}\F_m$ encodes the information about the future 
-       after $n$ and $T=\bigcup_n T_n$ is the \textit{tail $\sigma$-algebra} which encodes the 
+       after $n$ and $T=\bigcap_n T_n$ is the \textit{tail $\sigma$-algebra} which encodes the 
        information of the end of time. 
+       
+ \item (Events in the tail $\sigma$-algebra). For a process $(E_n)_n$ be a sequence of events. 
+       The associated tail $\sigma$-algebra $T$ is $\bigcap_n \sigma(\{E_k\}_{k\geq n})$.
+       The event $\limsup_n E_n$ is in $T$.
  
  \item (Kolmogorov's zero-one law). Let $(\F_n)_n$ be a sequence of \textit{independent}
        $\sigma$-algebras on a nonempty set $X$ and let $T$ be the tail $\sigma$-algebra.
        We equip $(X,\F)$ with a probability measure $\prob$. For every $H\in T$,
        $\prob(H)\in\{0,1\}$.
  
- \item (Borel-Cantelli lemma). Let $\{E_n\}_{n\in\N}$ be a sequence of events in $\ofp$. If
- \[
-  \sum_{n\in\N}\prob[E_n] < \infty,
- \]
- Then,
- \[
-  \prob[\limsup_n E_n] = 0.
- \]
-
- \item (Second Borel-Cantelli lemma). Let $\{E_n\}_{n\in\N}$ be a sequence of \textit{independent} events in $\ofp$. If
- \[
-  \sum_{n\in\N}\prob[E_n] = \infty,
- \]
- Then
- \[
-  \prob[\limsup_n E_n] = 1.
- \]
  \item (Counterpart of the Borel-Cantelli lemma). 
  Let $\{E_n\}_{n\in\N}$ be a nested increasing sequence of events in $\ofp$, that is 
  $E_k\subseteq E_{k+1}$ and let $E_k^c$ denote the complement of $E_k$.
@@ -1124,6 +1221,56 @@ theorem offers some further insight.
   \E[X\mid \F_k] \to \E[X\mid \F_\infty], 
  \]
  both in $\mathcal{L}_1\ofp$ and $\prob$-a.s.
+\end{enumerate}
+
+
+
+\subsection{Laws of large numbers and CLTs} 
+\begin{enumerate}
+  \item (Weak law of large numbers). Also known as Bernoulli's theorem. Let $\{X_k\}_k$ be
+       a sequence of independent identically distributed random variables, each having a 
+       finite mean $\E[X_k]=\mu$ and finite variance $\sigma^2$. Define 
+       $\bar{X}_k=\nicefrac{1}{k}(X_1+\ldots+X_k)$. Then $\bar{X}_k\to \mu$ in probability.
+   \item (Strong law of large numbers). Let $\{X_k\}_k$ and $\bar{X}_k$ be as above.
+         Then $\bar{X}_k\to \mu$ almost surely.    
+   \item (Uniform law of large numbers).  Let $f(x,\theta)$ be a function defined over
+         $\theta\in\Theta$. For fixed $\theta$ and 
+         a random process $\{X_k\}_k$ define $Z_k^\theta \dfn f(X_k, \theta)$. Let 
+         $\{Z_k^\theta\}_k$ be a sequence of independent and identically distributed 
+         random variables, such that the sample mean converges in probability to $\E[f(X, \theta)]$. 
+         Suppose that (i) $\Theta$ is compact, (ii) $f$ is continuous 
+         in $\theta$ for almost all $x$ and measurable with respect to $x$ for each $\theta$,
+         (iii) there is a function $g$ such that $\E[g(X)]<\infty$ and $\|f(x,\theta)\| \leq g(x)$ 
+         for all $\theta\in\Theta$. Then, $\E[f(X,\theta)]$ is continuous in $\theta$ and
+         \[
+          \sup_{\theta\in\Theta}\left\| 
+	    \bar{Z}^\theta_k - \E[f(X,\theta)] 
+          \right\|
+          \overset{a.s.}{\longrightarrow} 0
+         \]
+
+   \item (Lindeberg-L{\'e}vy central limit theorem). Let $\{X_k\}_k$ be iid, finite mean and variance 
+         and $\bar{X}_k$ as above. Then
+         \[
+          \frac{\bar{X}_k-\mu}{\sqrt{n}} \overset{d}{\longrightarrow} N(0, \sigma^2).
+         \]
+
+   \item (Lyapunov central limit theorem). Let $\{X_k\}_k$ be a sequence of independent random variables
+         with $\E[X_k]=\mu_k$ and finite variance $\sigma_k^2$. Define $s_k^2 = \sum_{i=1}^{k}\sigma_i^2$.
+         If for some $\delta>0$, the following condition holds (Lyapunov's condition)%
+         \footnote{In practice it is usually easiest to check Lyapunov's condition for $\delta=1$. 
+                   If a sequence of random variables satisfies Lyapunov's condition, then it also 
+                   satisfies Lindeberg's condition. The converse implication, however, does not hold.}:
+         \[
+          \lim_{k\to\infty} \frac{1}{s_k^{2+\delta}}\sum_{i=1}^{k}\E\left[ 
+          |X_i - \mu_i|^{2+\delta}
+          \right]=0,
+         \]
+	 then,
+	 \[
+	  \frac{1}{s_k}\sum_{i=1}^{k}(X_i - \mu_i) \overset{d}{\longrightarrow} N(0, 1).
+	 \]
+
 \end{enumerate}
 
 
@@ -1169,9 +1316,14 @@ theorem offers some further insight.
          martingale.
    \item (The classical martingale). The fortune of a gambler is a martingale in a fair game.
   \end{enumerate}
- \item (Sub- and super-martingales).
+ \item (Sub- and super-martingales). A random process $(X_n)_n$ is called a \textit{supermartingale} if 
+		     $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\leq X_{n}$. Likewise, it 
+		     is a \textit{submartingale} if $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\geq X_{n}$.
  \item (Stopping time).
  \item (Martingale stopping).
+ \item (Almost sure martingale convergence). Let $(X_n)_n$ be a martingale which is uniformly 
+       bounded in $\mathcal{L}_1$, i.e., $\sup_n \E[|X_n|] < \infty$. Then, there is a $X\in\mathcal{L}_1(\mathcal{F}_\infty)$,
+       so that $X_n\to X$ a.s., where $\mathcal{F}_\infty = \sigma(\mathcal{F}_n, n\geq 0)$.
  \item (Kolmogorov's submartingale inequality).
  \item (Azuma-Hoeffding inequality for martingales with bounded differences). Let $(X_i)_i$
        be a martingale or a  supermartingale and $|X_k-X_{k-1}|<c_{k}$ almost surely. Then for all $N\in\N$
@@ -1230,6 +1382,83 @@ theorem offers some further insight.
 \end{enumerate}
 
 
+\section{Theory of Risk}
+
+\subsection{Measuring risk}
+\begin{enumerate}
+ \item (Risk measures and coherency). Let $\ofp$ be a probability space and 
+       $\mathcal{Z}=\mathcal{L}_p\ofp$ for $p\in[1,\infty]$. A risk measure 
+       $\rho:\mathcal{Z}\to\barre$ is called coherent if
+       \begin{enumerate}[i.]
+        \item (Convexity). For $Z,Z'\in\mathcal{Z}$ and $\lambda\in[0,1]$, $\rho(\lambda Z + (1-\lambda)Z') 
+              \leq \lambda \rho(Z) + (1+\lambda) \rho(Z')$
+        \item (Monotonicity). For $Z,Z'\in\mathcal{Z}$, $\rho(Z)\leq \rho(Z')$ whenever $Z\leq Z'$ a.s.,
+        \item (Translation equivariance). For $Z\in\mathcal{Z}$ and $C\in \mathcal{Z}$ with $C(\omega)=c$
+              for almost all $\omega$ (almost surely constant), it is $\rho(C+Z) = c + \rho(Z)$,
+        \item (Positive homogeneity). For $Z\in\mathcal{Z}$ and $\alpha \geq 0$, $\rho(\alpha Z) = \alpha \rho(Z)$.
+       \end{enumerate}   
+ \item (Conjugate risk measure). With every convex risk measure, we associate the conjugate risk measure 
+       $\rho^*:\mathcal{Z}^*\to\barre$ defined as
+       \[
+        \rho^*(Y) = \sup_{Z\in\mathcal{Z}} \left\{\<Z,Y\> - \rho(Z) \right\}.
+       \]
+ \item (Biconjugate risk measure). With every convex risk measure,  we associate the biconjugate risk measure        
+       $\rho^{**}:\mathcal{Z}^{**}\to\barre$
+       \[
+        \rho^{**}(Z) = \sup_{Y\in\mathcal{Z}^*} \left\{\<Z,Y\> - \rho^{*}(Y) \right\}.
+       \]
+ \item (Dual representation). Let $\mathcal{Z}=\mathcal{L}_p\ofp$ with $p\in[1,\infty)$.
+       If $\rho$ is lower semicontinuous, then $\rho = \rho^{**}$. In particular,
+       \[
+        \rho(Z) = \sup_{Y\in\mathcal{Z}^*} \left\{\<Z,Y\> - \rho^{*}(Y) \right\} 
+                = \sup_{Y\in\mathfrak{A}} \left\{\<Z,Y\> - \rho^{*}(Y) \right\},
+       \]
+       where $\mathfrak{A} = \dom \rho^*$.
+ \item (Monotonicity condition). If $Y\geq 0$ (almost surely) for every $Y\in \mathfrak{A}$, 
+       then and only then $\rho$ is monotone.
+ \item (Translation equivariance condition). If for every $Y\in\mathfrak{A}$ it is $\E[Y]=1$,
+       then and only then, $\rho$ is translation equivariant.
+ \item (Positive homogeneity condition). If $\rho$ is the support function of $\mathfrak{A}$, 
+       that is, $\rho(Z) = \sup_{Y\in\mathfrak{A}}\<Y,Z\>$, then and only then it is positively homogeneous.
+ \item (Subdifferentiability). If $\rho:\mathcal{Z}\to\Re$ is real valued, convex and monotone, 
+       then it is continuous and subdifferentiable on $\mathcal{Z}$.
+ \item (Subdifferentials of risk measures). Let $\rho:\mathcal{L}_p\ofp \to \barre$, $p\in [1,\infty)$,
+        be convex and lower semicontinuous. Then $\partial \rho(Z) = \arg\max_{Y\in\mathfrak{A}} \{\<Y,Z\> - \rho^*(Z)\}$.
+        If, additionally, $\rho$ is positively homogeneous, then $\partial \rho(Z) = \arg\max_{Y\in\mathfrak{A}}\<Y,Z\>$.
+ \item (Convexity of $\rho\circ F$). Let $F:\Re^n\to\mathcal{Z}$ be a convex mapping and $\rho$ be a convex
+       monotone risk measure. Then $\rho\circ F$ is convex. 
+ \item (Subdifferentiability of $\rho\circ F$). Let $\mathcal{Z}=\mathcal{L}_p\ofp$ with $p\in[1,\infty)$,
+       $F:\Re^n\to\mathcal{Z}$ be a convex mapping and $\rho:\mathcal{Z}\to\barre$ be a convex monotone 
+       risk measure which is finite-valued and continuous at $\bar{Z} = F(\bar{x})$. Define $\phi = \rho\circ F$.
+       Then $\phi$ is subdifferentiable at $\bar{x}$ and 
+       \[
+        \partial \phi(\bar{x}) = \operatorname{cl} \left( 
+        \bigcup_{\substack{Y\in \partial \rho(\bar{Z})\\F'\in \partial F(\bar{x})}}\<Y, F'\>\right)
+       \]
+
+ \item (Law invariance). A risk measure $\rho$ is called law invariant if $\rho(Z) = \rho(Z')$ whenever 
+       $Z$ and $Z'$ have the same distribution.
+\end{enumerate}
+
+
+\subsection{Risk-averse optimization}
+\begin{enumerate}
+ \item (Interchangeability of risk and infimum). Let $\mathcal{Z}\dfn \mathcal{L}_p\ofp$ and 
+       $\mathcal{Z}' \dfn \mathcal{L}_{p'}\ofp$ with $p,p'\in[1,\infty]$. 
+       Let $F:\Re^n\to\mathcal{Z}$, that is, for $x\in\Re^n$, $F(x)$ is a random variable; let
+       $(F(x))(\omega)=f(x,\omega)$. For a set $X\subseteq \Re^n$ define 
+       $\mathfrak{M}_X \dfn \{\chi \in \mathcal{Z}': \chi \in X,\, \prob\text{-a.s.}\}$.
+       Let $\rho:\mathcal{Z}\to\barre$ be a proper monotone risk measure. 
+       For $\chi\in\mathcal{Z}'$ define $F_\chi(\omega) = f(\chi(\omega), \omega)$
+       Suppose that $\inf_{x\in X}F(x) \in \mathcal{Z}$
+       and that $\rho$ is continuous at $\inf_{x\in X}F(x)$. Then
+       \[
+        \inf_{\chi \in \mathfrak{M}_X} \rho(F_\chi) = \rho\left(\inf_{x\in X}F(x)\right).
+       \]
+
+\end{enumerate}
+
+
 %\section{Copulas}
 %\lipsum[1]
 \section{Paradoxes and Fun Facts}
@@ -1262,6 +1491,7 @@ Bibliographic references including lecture notes and online resources with some 
        to weak convergence results, limits of independent sums, results for dependent processes 
        with emphasis on Markov chains, a comprehensive introduction to martingales, stationary processes
        and ergodic theorems and some notes on dynamic programming. Online at \url{https://www.math.nyu.edu/faculty/varadhan/}.
+ \item \label{cite:LinBai2011} \bibentry{LinBai2011}: several interesting (elementary and advanced) inequalities on probability spaces.       
 \end{enumerate}
 }
 
