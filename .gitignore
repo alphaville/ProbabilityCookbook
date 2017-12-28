@@ -8,3 +8,6 @@
 *.out
 Uncorrelated.pdf
 *.dvi
+*.bbl
+*.blg
+*.xml

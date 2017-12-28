@@ -6,6 +6,9 @@
 \usepackage{lipsum}
 \usepackage{enumerate}
 
+\usepackage{caption}
+\captionsetup{font=footnotesize,labelfont=bf}
+
 \usepackage{natbib}
 \usepackage{bibentry}
 \nobibliography*
@@ -576,6 +579,50 @@ theorem offers some further insight.
              
 \end{enumerate}
 
+\subsection{$\mathcal{L}^p$ spaces}
+\begin{enumerate}
+ \item ($p$-norm). Let $X$ be a real-valued random variable on $\ofp$. For $p\in[1,\infty)$ define the $p$-norm of $X$ as 
+       \[
+        \|X\|_p = \E[|X|^p]^{1/p}.
+       \]
+ \item ($\mathfrak{L}^p$ spaces). Define $\mathfrak{L}^p\ofp=\{X:\Omega\to\Re,\text{ measurable}, 
+       \|X\|_p<\infty\}$ and equip this space with the addition and scalar multiplication 
+       operations $(X+Y)(\omega) = X(\omega) + Y(\omega)$ and $(\alpha X)(\omega) = \alpha X(\omega)$.
+       This becomes a seminormed space%
+	  \footnote{$\|X\|=0$ does not imply that $X=0$, but instead 
+		    that $X=0$ almost surely. However, $\|\cdot\|_p$ is absolutely 
+		    homogeneous, subadditive and nonnegative}.%
+ \item ($\mathcal{L}^p$ spaces). Define $\mathcal{N}\ofp = \{X:\Omega\to\Re,
+       \text{ measurable}, X=0 \text{ a.s.}\}$; this is the kernel of $\|\cdot\|_p$. 
+       Then, define $\mathcal{L}^p\ofp = \mathfrak{L}^p\ofp / \mathcal{N}$.
+       This is a normed space where for $X\in\mathfrak{L}^p\ofp$ and $[X]=X+\mathcal{N}\in\mathcal{L}^p\ofp$
+       we have $\|[X]\|_p \dfn \|X\|_p$.
+ \item ($\infty$-norm, $\mathfrak{L}_\infty$ and $\mathcal{L}_\infty$). The infinity norm is defined as 
+	\[
+	 \|X\|_\infty = \esssup |X| = \inf\{\lambda \in \Re: \prob[|X|> \lambda] = 0\},
+	\]
+	or equivalently 
+	\[
+	 \|X\|_\infty = \inf \{\lambda \in \Re: |X|\leq \lambda,\, \prob\text{-a.s.}\}.
+	\]
+	The spaces $\mathfrak{L}_\infty\ofp$ and $\mathcal{L}_\infty\ofp$ are defined 
+	similarly.
+ \item ($\mathcal{L}_\infty\ofp$ as a limit). If there is a $p'\in [1,\infty)$ such 
+       that $X\in\mathcal{L}_\infty\cap \mathcal{L}_{p'}$, then
+       \[
+        \|X\|_\infty = \lim_{p\to\infty}\|X\|_p.
+       \]
+
+ \item ($\mathcal{L}_2$ is a Hilbert space). $\mathcal{L}_p\ofp$ is the only Hilbert 
+       $\mathcal{L}_p$ space with inner product
+       \[
+        \<X,Y\> = \E[XY].
+       \]
+
+
+\end{enumerate}
+
+
 \subsection{Product spaces}
 \begin{enumerate}
  \item (Product $\sigma$-algebra). Let $\{X_a\}_{a\in A}$ be an indexed collection of nonempty sets; define 
@@ -755,7 +802,8 @@ theorem offers some further insight.
 \end{enumerate}
 
 
-\section{Conditional Expectation}
+\section{Conditioning}
+\subsection{Conditional Expectation}
 \begin{enumerate}
  \item (Conditional Expectation). Let $X$ be a random variable on $\ofp$ and $\HH\subseteq \F$.
        A \textit{conditional expectation} of $X$ given $\HH$ is an $\HH$-measurable 
@@ -768,6 +816,9 @@ theorem offers some further insight.
         \E[X 1_H] = \E[\ce{X}1_H],
        \]
        for all $H\in\HH$.
+ \item (Uniqueness). All versions of a conditional expectation, $\ce{X}$, differ only on a 
+       set of measure zero%
+       \footnote{R. Durrett, ``Probability: Theory and Examples,'' 2013, Available at: \url{https://services.math.duke.edu/~rtd/PTE/PTE4_1.pdf}}.
  \item (Equivalent definition). It is equivalent to define the conditional expactation of $X$, 
        conditioned by a $\sigma$-algebra $\HH$ as a random variable $\ce{X}$ with the property
        \[
@@ -846,9 +897,21 @@ theorem offers some further insight.
 \end{enumerate}
 
 
+\subsection{Conditional Probability}
+\begin{enumerate}
+ \item (Conditional probability). Let $\ofp$ be a probability space and $\HH$ be a sub-$\sigma$-algebra
+       of $\F$. We define $\prob_{\HH}$ as an operator so that for all $H\in\HH$
+       \[
+        \prob_{\HH}[H] = \E_{\F}1_{H}.
+       \]
+ \item (Conditional probability given an event). For $E,H\in\F$, $\prob[E\cap H] = \prob[H]\prob_{H}[E]$. This is
+       uniquely defined provided that $\prob[H]>0$.
+\end{enumerate}
+
+
 \section{Inequalities on Probability Spaces}
 
-\subsection{$\mathcal{L}_p$ spaces}
+\subsection{Inequalities on $\mathcal{L}_p$ spaces}
 \begin{enumerate}
   \item (H\"older's inequality). If $X\in\mathcal{L}_p\ofp$, $Y\in\mathcal{L}_q\ofp$ (where $p$, $q$ are conjugate exponents), then $XY\in\mathcal{L}_1\ofp$ and \[ \E[|XY|] = \|XY\|_1 \leq \|X\|_p \|Y\|_q.\]
  
@@ -918,7 +981,11 @@ theorem offers some further insight.
        \prob[\sup_{x\in\Re}(F_n(x) - F(x)) > \epsilon] \leq e^{-2n\epsilon^2},
       \]
       for every $\epsilon \geq \sqrt{\tfrac{1}{2n}\ln 2}$.
-\item (Chung-Erd\H{o}s inequality).          
+\item (Chung-Erd\H{o}s inequality). Let $E_1,\ldots, E_n\in\F$ and $\prob[E_i]>0$ for some $i$. Then 
+      \[
+       \prob[E_1 \vee \ldots \vee E_n] \geq \frac{(\sum_{i=1}^{n}\prob[E_i])^2}{\sum_{i=1}^{n}\sum_{j=1}^{n}\prob[E_i\wedge E_j]}
+      \]
+
 \end{enumerate}
 
 \subsection{Involving sums or averages}
@@ -1056,6 +1123,10 @@ theorem offers some further insight.
  \item (Cauchy criterion). The sequence $\{X_n\}_n$ is convergent almost surely if and only if
        $\lim_{m,n\to \infty}|X_n-X_m|\to 0$ almost surely.
        
+ \item (Continuous mapping theorem). Let $X_n \overset{a.s.}{\to} X$ and $g$ be a (almost everywhere)
+       continuous mapping. Then
+       $g(X_n) \overset{a.s.}{\to} g(X)$.
+       
  \item (Topological (non) characterization).
        The concept of almost sure convergence does not come from a topology on the space 
        of random variables. This means there is no topology on the space of random variables 
@@ -1072,7 +1143,7 @@ theorem offers some further insight.
         \lim_n \prob[|X_n-X|>\epsilon] = 0.
        \]
        We denote $X_n \overset{p}{\to} X$.
- \item (Continuous mapping theorem). Let $X_n \overset{p}{\to} X$ and $g$ be a continuous mapping. Then
+ \item (Continuous mapping theorem). Let $X_n \overset{p}{\to} X$ and $g$ be a (almost everywhere) continuous mapping. Then
        $g(X_n) \overset{p}{\to} g(X)$.
  \item (Metrizability). Convergence in probability defines a topology which is metrizable via the \textit{Ky Fan metric}
       \[
@@ -1114,8 +1185,9 @@ theorem offers some further insight.
 \end{enumerate} 
  
 \subsection{Convergence in $\mathcal{L}_p$}
-\begin{enumerate}
- \item (Convergence in $\mathcal{L}_p\ofp$). 
+\begin{enumerate}        
+ \item (Convergence in $\mathcal{L}_p\ofp$). We say that $X_k$ converges to $X$ in $\mathcal{L}_p$ 
+       if $X,X_k\in\mathcal{L}^p$ for all $k\in\N$ and $\|X_k-X\|_p\to 0$.
  \item (Convergence $\mathcal{L}_1$ under uniform integrability). If $X_n \to X$ in probability and $(X_n)_n$ is uniformly
        integrable, then $X_n\to X$ in $\mathcal{L}_1$.
  \item (In $\mathcal{L}_s\ofp$ $\Rightarrow$ in $\mathcal{L}_p\ofp$, for $s>p\geq 1$). 
@@ -1142,7 +1214,30 @@ theorem offers some further insight.
        
  \item (Almost surely $\not\Rightarrow$ in $\mathcal{L}_p$). On $([0,1], \mathcal{B}_{[0,1]}, \lambda)$ take $X_n=n 1_{[0,1/n]}$.
        Then, for all $p\in[1,\infty]$ we have $\|X_n\|_p=1$, but the sequence converges almost surely to $0$.
+       
+ \item (In $\mathcal{L}^p$, $p\in[1,2)$ $\not\Rightarrow$ In $\mathcal{L}^p$, for $p\geq 2$).
+       Let $\Omega=\N$ and $Z_k^p$ be a sequence of random variables with parameter $p$ and 
+       \begin{align*}
+        \prob[Z_k^p=n] &= pn,\\
+        \prob[Z_k^p=0] &= 1-pn.
+       \end{align*}
+       Let $X=0$ and $X_k$ be defined as
+       \[
+        X_k = Z_{k}^{p_k}
+       \]
+       where $p_k=\nicefrac{1}{k^2 \ln k}$. 
+       Then $\E[|X_k|^t]=\nicefrac{k^{t-2}}{\ln k}$. 
+       We have $\E[|X_k|^t]\to 0$ if and only if $t<2$.
 \end{enumerate}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.6\linewidth]{figures/convergence_rv}
+ \caption{Illustration of the relationships among different modes of convergence of random variables. 
+         Convergence in $\mathcal{L}_\infty$ implies convergence in $\mathcal{L}_p$ for all $p\in[1,\infty)$
+         which in turn implies convergence in $\mathcal{L}_{p'}$ for all $1\leq p' \leq p$ which implies 
+         convergence in probability which implies convergence in distribution which implies 
+         convergence of the }
+\end{figure}
 
 
 \subsection{Convergence in distribution}
@@ -1163,10 +1258,14 @@ theorem offers some further insight.
       and random variables $Y$ and $(Y_n)_n$ so that $Y_n$ is equal in distribution to $X_n$,
       $Y$ is equal in distribution to $X$ and $Y_n\to Y$ almost surely.
       
-\item (Scheff\'e's theorem for density functions).\footnote{\url{http://www.math.chalmers.se/~serik/WeakConv/C-space.pdf}}
+\item (Scheff\'e's theorem for density functions).\footnote{S. Sagitov, ``Weak Convergence of Probability Measures,'' 2013, Available at: \url{http://www.math.chalmers.se/~serik/WeakConv/C-space.pdf}}
 Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
       with respect to a measure $\mu$. If $f_n \to f$ $\mu$-a.s., then $\prob_n \to \prob$ in the total 
       variation metric and, as a result,  $\prob_n \to \prob$ weakly.
+      
+\item (Continuous mapping theorem). For a (almost everywhere) continuous function $g$, if the sequence $\{X_k\}_k$ 
+      converges in distribution to $X$, then $\{g(X_k)\}_k$ converges in distribution to 
+      $g(X)$.
       
 \item (Convergence in probability $\Rightarrow$ in distribution). If $\{X_n\}_n$ converges in probability,
       then it converges in distribution to the same limit.
@@ -1177,7 +1276,7 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
       converge in probability. As a second example, the sequence $X_n=X$ where $X$ follows the Bernoulli distribution
       with parameter $\frac{1}{2}$, converges in distribution to $1-X$, but not in probability.
       
-\item (Polya-Cantelli lemma)\footnote{\url{http://dept.stat.lsa.umich.edu/~moulib/ch2.pdf}}. If $X_n\to X$ in distribution, $F_n$ are the distribution function of $X_n$ and 
+\item (Polya-Cantelli lemma)\footnote{Lecture notes of M. Banerjee, Available at: \url{http://dept.stat.lsa.umich.edu/~moulib/ch2.pdf}}. If $X_n\to X$ in distribution, $F_n$ are the distribution function of $X_n$ and 
       $X$ has the \textit{continuous} distribution function $F$, then $\|F_n - F\|_\infty \dfn \sup_{x}|F_n(x) - F(x)| \to 0$
       as $n\to\infty$.
 \end{enumerate}
@@ -1319,12 +1418,35 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
  \item (Sub- and super-martingales). A random process $(X_n)_n$ is called a \textit{supermartingale} if 
 		     $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\leq X_{n}$. Likewise, it 
 		     is a \textit{submartingale} if $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\geq X_{n}$.
- \item (Stopping time).
+ \item (Stopping time). Let $\{Z_k\}_k$ be a random process and $T$ a stopping time. 
+       Define $X_k(\omega) = Z_{k\wedge T(\omega)}$, that is
+       \[
+        X_k(\omega) = \begin{cases}
+                       Z_k(\omega),&\text{if }k \leq T(\omega)\\
+                       Z_{T(\omega)}(\omega),&\text{otherwise}
+                      \end{cases}
+       \]
+       If $Z$ is a (sub)matringale, then $X$ is a (sub)matringale too.
  \item (Martingale stopping).
  \item (Almost sure martingale convergence). Let $(X_n)_n$ be a martingale which is uniformly 
        bounded in $\mathcal{L}_1$, i.e., $\sup_n \E[|X_n|] < \infty$. Then, there is a $X\in\mathcal{L}_1(\mathcal{F}_\infty)$,
        so that $X_n\to X$ a.s., where $\mathcal{F}_\infty = \sigma(\mathcal{F}_n, n\geq 0)$.
- \item (Kolmogorov's submartingale inequality).
+ \item (Kolmogorov's submartingale inequality). Let $\{X_k\}_k$ be a nonnegative submartingale.
+       Then, for $n\in\N_{>0}$ and $\alpha>0$,
+       \[
+        \prob\left[ \max_{k=1,\ldots, n}X_k \geq \alpha\right] \leq \frac{\E[X_n]}{\alpha}.
+       \]
+       \begin{enumerate}[i.]
+        \item (Corollary 1). Let $\{X_k\}_k$ be a nonnegative martingale. 
+              Then $\prob[\sup_{k\geq 1}X_k \leq \alpha]\leq\E[X_1]/\alpha$ for $\alpha>0$.
+        \item (Corollary 2). Let $\{X_k\}_k$ be a martingale with $\E[X_k^2]< \infty$ for all $k\in\N_{>0}$. 
+               Then, $\prob[\max_{k=1,\ldots, n}|X_k|\geq \alpha]\leq \E[X_n^2]/\alpha$ for all $n\in \N_{\geq 2}$
+               and $\alpha>0$.
+        \item (Corollary 3). Let $\{X_k\}_k$ be a nonnegative supermartingale. Then, for $n\in\N_{>0}$
+              and $\alpha>0$, $\prob[\cup_{k\geq n}\{Z_k\geq \alpha\}]\leq\E[Z_n]/\alpha$.
+       \end{enumerate}
+
+
  \item (Azuma-Hoeffding inequality for martingales with bounded differences). Let $(X_i)_i$
        be a martingale or a  supermartingale and $|X_k-X_{k-1}|<c_{k}$ almost surely. Then for all $N\in\N$
        and $t\in\Re$,
@@ -1377,14 +1499,30 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
 
 \subsection{KL divergence}
 \begin{enumerate}
- \item (Definition).
- \item (Pinsker's inequality).
+ \item (Definition/Discrete spaces). Let $(\Omega, \F)$ be a discrete measurable space and $\prob$ and $\prob'$ two probability measures
+       on it. The Kullback-Leibler (KL) divergence from $\prob'$ and $\prob$ is defined as%
+	  \footnote{Lecture notes by S. Khudanpur available online at \url{https://www.clsp.jhu.edu/~sanjeev/520.447/Spring00/I-divergence-properties.ps}}
+       \[
+        \mathrm{D}_{\mathrm{KL}}(\prob \| \prob') = -\sum_i \prob_i \log \left(\nicefrac{\prob'_i}{\prob_i}\right) = \sum_i \prob_i \log \left(\nicefrac{\prob_i}{\prob'_i}\right)
+       \]
+ \item (Definition/Continuous spaces with PDFs). The KL divergence over a continuous probability space and for two 
+       probability measures $\prob$ and $\prob'$  with PDFs $p$ and $p'$ respectively is
+       \[
+        \mathrm{D}_{\mathrm{KL}}(\prob \| \prob') = \int_{-\infty}^{\infty}p(x)\log\left(\nicefrac{p(x)}{p'(x)}\right)\d x
+       \]       
+ \item (Definition/Continuous spaces). If $\prob$ is absolutely continuous with respect to $\prob'$, we define
+       \[
+        \mathrm{D}_{\mathrm{KL}}(\prob \| \prob') = \int_{\Omega}\log \left( \nicefrac{\d\prob}{\d\prob'}\right) \d\prob.
+       \]
+
+ \item (Nonnegative). The KL divergence is always nonnegative: $\mathrm{D}_{\mathrm{KL}}(\prob \| \prob')\geq 0$
+ \item (Pinsker's inequality). $d_{\mathrm{TV}}(\prob,\prob')\leq \sqrt{\tfrac{1}{2}\mathrm{D}_{\mathrm{KL}}(\prob\| \prob')}$
 \end{enumerate}
 
 
 \section{Theory of Risk}
 
-\subsection{Measuring risk}
+\subsection{Risk measures}
 \begin{enumerate}
  \item (Risk measures and coherency). Let $\ofp$ be a probability space and 
        $\mathcal{Z}=\mathcal{L}_p\ofp$ for $p\in[1,\infty]$. A risk measure 
@@ -1414,36 +1552,147 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
                 = \sup_{Y\in\mathfrak{A}} \left\{\<Z,Y\> - \rho^{*}(Y) \right\},
        \]
        where $\mathfrak{A} = \dom \rho^*$.
+       
+ \item (Acceptance set). The set $\mathcal{A}_\rho = \{X\in\mathcal{Z} : \rho(X)\leq 0\}$ is called the acceptance 
+       set of $\rho$. Several properties of $\rho$ can be tested using its acceptance set.
+       
  \item (Monotonicity condition). If $Y\geq 0$ (almost surely) for every $Y\in \mathfrak{A}$, 
        then and only then $\rho$ is monotone.
+       
  \item (Translation equivariance condition). If for every $Y\in\mathfrak{A}$ it is $\E[Y]=1$,
        then and only then, $\rho$ is translation equivariant.
+       
  \item (Positive homogeneity condition). If $\rho$ is the support function of $\mathfrak{A}$, 
        that is, $\rho(Z) = \sup_{Y\in\mathfrak{A}}\<Y,Z\>$, then and only then it is positively homogeneous.
+       $\mathfrak{A}$ is called the admissibility set of $\rho$.
+       
  \item (Subdifferentiability). If $\rho:\mathcal{Z}\to\Re$ is real valued, convex and monotone, 
        then it is continuous and subdifferentiable on $\mathcal{Z}$.
  \item (Subdifferentials of risk measures). Let $\rho:\mathcal{L}_p\ofp \to \barre$, $p\in [1,\infty)$,
         be convex and lower semicontinuous. Then $\partial \rho(Z) = \arg\max_{Y\in\mathfrak{A}} \{\<Y,Z\> - \rho^*(Z)\}$.
         If, additionally, $\rho$ is positively homogeneous, then $\partial \rho(Z) = \arg\max_{Y\in\mathfrak{A}}\<Y,Z\>$.
- \item (Convexity of $\rho\circ F$). Let $F:\Re^n\to\mathcal{Z}$ be a convex mapping and $\rho$ be a convex
+ \item (Convexity of $\rho\circ F$). Let $F:\Re^n\to\mathcal{Z}$ be a convex mapping%
+       \footnote{The mapping $F:\Re^n\to\mathcal{Z}$ if for every $\lambda\in[0,1]$ and $x,y\in\Re^n$
+                 it is $F(\lambda x + (1-\lambda)y)(\omega) \leq \lambda F(x)(\omega) + (1-\lambda)F(y)(\omega)$
+                 for $\prob$-almost every $\omega$.} and $\rho$ be a convex
        monotone risk measure. Then $\rho\circ F$ is convex. 
- \item (Subdifferentiability of $\rho\circ F$). Let $\mathcal{Z}=\mathcal{L}_p\ofp$ with $p\in[1,\infty)$,
+ \item (Directional differentiability). Let $\mathcal{Z}=\mathcal{L}_p\ofp$ with $p\in[1,\infty)$,
        $F:\Re^n\to\mathcal{Z}$ be a convex mapping and $\rho:\mathcal{Z}\to\barre$ be a convex monotone 
-       risk measure which is finite-valued and continuous at $\bar{Z} = F(\bar{x})$. Define $\phi = \rho\circ F$.
+       risk measure which is finite-valued and continuous at $\bar{Z} = F(\bar{x})$.
+       Then, $\phi\dfn \rho\circ F$ is directionally differentiable at $\bar{x}$,
+       $\phi'(\bar{x};h)$ is finite-valued for all $h\in\Re^n$ and\footnote{%
+       $F$ maps a vector $x$ to random variables, so it is $F(x)(\omega)=f(x,\omega)$. The directional derivative of $f$ with 
+       respect to $x$ along a direction $h$ is $f'(\bar{x}; h)$ and it is a random variable. The scalar product here is defined as
+       $\<Y, f'(\bar{x}; h)\> = \int_{\Omega} Y(\omega) f'(\bar{x}; h)(\omega) \d \prob(\omega)$.}
+       \[
+        \phi'(\bar{x}; h) = \sup_{Y \in \partial \rho(\bar{Z})}\<Y, f'(\bar{x}; h)\>
+       \]
+       
+ \item (Subdifferentiability of $\rho\circ F$). Let $\mathcal{Z}$, $F$, $\rho$, $\bar{x}$ and $\bar{Z}$ be as above.
+       Define $\phi = \rho\circ F$. 
        Then $\phi$ is subdifferentiable at $\bar{x}$ and 
        \[
-        \partial \phi(\bar{x}) = \operatorname{cl} \left( 
-        \bigcup_{\substack{Y\in \partial \rho(\bar{Z})\\F'\in \partial F(\bar{x})}}\<Y, F'\>\right)
+        \partial \phi(\bar{x}) = \operatorname{cl} 
+        \bigcup_{\substack{Y\in \partial \rho(\bar{Z})\\F'\in \partial F(\bar{x})}}\<Y, F'\>
        \]
+       
+ \item (Continuity equivalences). Let $\rho:\mathcal{Z}\to\barre$ be a convex, monotone, translation
+       equivariant risk measure and $\mathcal{Z}=\mathcal{L}_p\ofp$. 
+       The following are equivalent\footnote{%
+       For a detailed discussion on continuity properties of risk measures, see D. Filipovi{\'c} 
+       and G. Svindland, ``Convex risk measures on $\mathcal{L}^p$,''
+       Available online at: \url{http://www.math.lmu.de/~filipo/PAPERS/crmlp.pdf}.}:
+       \begin{enumerate}[i.]
+        \item $\rho$ is continuous
+        \item $\rho$ is continuous at a $X\in\dom \rho$
+        \item $\operatorname{int} \mathcal{A}_\rho \neq \varnothing$
+        \item $\rho$ is lower semi-continuous and finite-valued ($\dom \rho = \mathcal{Z}$)
+       \end{enumerate}
+
+ 
+ \item (Lipschitz continuity wrt infinity norm). Let $\rho:\mathcal{Z}\to\barre$ be a proper, 
+       convex, monotone, translation equivariant risk measure. Then, for all $X,X'\in\dom\rho$
+       \[
+        \left|\rho(X)-\rho(X')\right| \leq \|X-X'\|_{\infty}.
+       \]
+
 
  \item (Law invariance). A risk measure $\rho$ is called law invariant if $\rho(Z) = \rho(Z')$ whenever 
        $Z$ and $Z'$ have the same distribution.
+       
+ \item (Fatou property \#1). Let $\rho:\mathcal{L}^\infty\to \barre$ be a proper convex risk measure. 
+       The following are equivalent:
+       \begin{enumerate}[i.]
+        \item $\rho$ is $\sigma(\mathcal{L}^\infty, \mathcal{L}^1)$-lower semi-continuous
+        \item $\rho$ has the Fatou property, i.e., $\rho(X) \leq \liminf_{k}\rho(X_k)$ whenever
+              $\{X_k\}$ is essentially uniformly bounded (there is $Z\in\mathcal{L}^\infty$ so that $X_k\leq Z$ for all $k\in\N$)
+              and $X_k\overset{p}{\longrightarrow}X$.
+       \end{enumerate}
+
+ \item (Law-invariant risk measures have the Fatou property)%
+	  \footnote{This result is rather involved. For a detailed
+	  presentation refer to the article E. Jouini, W. Schachermayer and N. Touzi, 
+	  ``Law invariant risk measures have 
+	  the Fatou property,'' (Chapter) Advances in Mathematical Economics, 2006, Springer Japan.}.
+       Let $\mathcal{L}^\Phi$ denote an Orlicz space%
+	  \footnote{An Orlicz space is a function space which generalizes 
+	            the $\mathcal{L}^p$ spaces. A Young function $\Phi:[0,\infty)\to[0,\infty)$ is a convex function 
+	            with $\lim_{x\to\infty} \Phi(x)\to\infty$ and $\Phi(0)= 0$.
+	            Given a Young function $\Phi$ and a probability space $\ofp$, define 
+	            $L^\Phi\ofp= \{X:\Omega\to\Re, \text{ measurable}, \E[\Phi(|X|)] < \infty\}$
+	            This set is not necessarily a vector space. The vector space spanned by $L^\Phi$
+	            is the Orlicz space $\mathcal{L}^\Phi\ofp$. This space is equipped with the Luxemburg 
+	            norm $\|X\|_\Phi = \inf\{\lambda>0:\E[\Phi(X/\lambda)]\leq 1\}$. We say that $\Phi$
+	            has the $\Delta_2$ condition if $\Phi(2t) \leq K \Phi(t)$ for some $K>0$.}. 
+       Any proper, (quasi)convex, law-invariant risk measure $\rho:\mathcal{L}^\Phi\to\barre$
+       that is norm-lower semi-continuous has the Fatou property if and only if $\Phi$ is $\Delta_2$.
+ 
+ \item (Kusuoka representations). Let $\ofp$ be a nonatomic space and let $\rho:\mathcal{L}_p\ofp\to\barre$ be a proper
+       lower semi-continuous law-invariant coherent risk measure. Then, there exists a set $\mathfrak{M}$ of probability measures 
+       on $[0,1)$ so that 
+       \[
+        \rho(Z) = \sup_{\mu\in\mathfrak{M}}\int_{0}^{1}\operatorname{AV@R}_{1-\alpha}(Z)\d\mu(\alpha),
+       \]
+       where $\operatorname{AV@R}_{1-\alpha}$ is the average value-at-risk operator at level $1-\alpha$ (defined 
+       in the next section).
+
+ \item (Zero risk). Let $\ofp$ be a nonatomic probability space. Let $\rho$ be a proper, lower semicontinuous,
+       coherent, law invariant risk measure. If $Z\in\mathcal{Z}$, $Z\geq 0$ a.s. then $\rho(Z)=0$ if and only if $Z=0$ a.s.
+ \item (Risk under conditioning). Let $\ofp$ be a nonatomic space and $\rho:\mathcal{Z}\to\barre$ be a 
+        proper convex lower semi-continuous  law-invariant risk measure. Let $\HH$ be a sub-$\sigma$-algebra 
+        of $\F$. Then, $\rho(\ce{X})\leq \rho(X)$, for all $X\in\mathcal{Z}$ and $\E[X]\leq \rho(X)$.
+\end{enumerate}
+
+
+\subsection{Measuring risk}
+\begin{enumerate}
+ \item (Trivially coherent risk measures). The expectation operator and the essential supremum are 
+       coherent risk measures. For $\omega\in\Omega$, define $\rho(X) = X(\omega)$. This is a coherent
+       risk measure, however, it is not law invariant.
+ \item (Mean-Variance measure).  The mean-variance risk measure is defined as $\rho(X) = \E[X] + c \mathrm{Var}[X]$.
+       This risk measure is law invariant, continuous, convex and translation equivariant. 
+       However, it is neither monotone nor positively homogeneous.
+ \item (Value-at-Risk). The Vale-at-Risk of a random variable $X$ at level $\alpha$ is the $(1-\alpha)$-quantile of $X$,
+       that is, $\operatorname{V@R}_\alpha[X] = \inf\{t\in\Re: \prob[X>t]\leq \alpha\}$. $\operatorname{V@R}_\alpha$ 
+       is monotone, positively homogeneous and translation equivariant, but nonconvex and not subadditive%
+	  \footnote{The Value-at-Risk is convex for certain classes of random variables. See A. I. Kibzun and E. A. Kuznetsov, ``Convex Properties of the Quantile Function in Stochastic Programming,'' Automation and Remote Control, Vol. 65, No. 2, 2004, pp. 184--192.}.
+ \item (Average Value-at-Risk). The Average Value-at-Risk is defined as%
+	  \footnote{We use the notation $[X]=\max\{X,0\}$. We use the definition of Shapiro et al. Other authors
+	            use different definitions such as $\operatorname{AV@R}_\alpha[X] = \inf_{t\in\Re}t + \nicefrac{1}{1-\alpha}\E[X-t]_+$.}
+       \[
+          \operatorname{AV@R}_\alpha[X] = \inf_{t\in\Re}t + \nicefrac{1}{\alpha}\E[X-t]_+.
+       \]
+       This is a coherent law-invariant risk measure.
+ \item (Mean Upper Semideviation).
+ \item (Entropic risk measure).
+ \item (Entropic Value-at-Risk).
+ \item (Expectiles).
 \end{enumerate}
 
 
 \subsection{Risk-averse optimization}
 \begin{enumerate}
- \item (Interchangeability of risk and infimum). Let $\mathcal{Z}\dfn \mathcal{L}_p\ofp$ and 
+ \item (Interchangeability principle for risk measures). Let $\mathcal{Z}\dfn \mathcal{L}_p\ofp$ and 
        $\mathcal{Z}' \dfn \mathcal{L}_{p'}\ofp$ with $p,p'\in[1,\infty]$. 
        Let $F:\Re^n\to\mathcal{Z}$, that is, for $x\in\Re^n$, $F(x)$ is a random variable; let
        $(F(x))(\omega)=f(x,\omega)$. For a set $X\subseteq \Re^n$ define 
@@ -1455,7 +1704,7 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
        \[
         \inf_{\chi \in \mathfrak{M}_X} \rho(F_\chi) = \rho\left(\inf_{x\in X}F(x)\right).
        \]
-
+ \item (Interchangeability principle).
 \end{enumerate}
 
 
@@ -1463,7 +1712,8 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
 %\lipsum[1]
 \section{Paradoxes and Fun Facts}
 \begin{enumerate}
- \item (Lebesgue measure of closure). In $\Re$, take the \textit{modified Cantor set} $C$. Then, $\lambda(E) < \lambda(\bar{E})$. 
+ \item (Lebesgue measure of closure). In $\Re$, take the 
+       \textit{modified Cantor set} $C$. Then, $\lambda(E)<\lambda(\bar{E})$. 
  \item (Open cover of rationals, finite Lebesgue measure).
  \item (Product of integrable RVs, not integrable).
  \item ($\|f\|_\infty = \lim_p \|f\|_p$).
@@ -1475,11 +1725,17 @@ Let $\prob_n$ and $\prob$ have densities $f_n$ and $f$
 Bibliographic references including lecture notes and online resources with some comments:
 {\small
 \begin{enumerate}
- \item \label{cite:Ambrosio2013} \bibentry{Ambrosio2013}: A short note at \url{http://planetmath.org/sites/default/files/texpdf/38346.pdf}
-       showing that almost surely bounded RVs have all their moments bounded.
- \item \label{cite:RLWolpert05} \bibentry{RLWolpert05}: Lecture notes with a succinct presentation of some very useful results,
-        but without many proofs. Available at \url{https://www2.stat.duke.edu/courses/Spring05/sta205/lec/s05wk07.pdf}.
- \item \label{cite:cinlar2011} \bibentry{cinlar2011}: A fantastic book for one's first steps in probability theory with 
+ \item \label{cite:Gallager2013} \bibentry{Gallager2013}: A gentle introduction to stochastic 
+        processes suitable for engineers who want to eschew the mathematical drudgery. 
+        Following a short, but circumspect introduction to probability theory, the author 
+        discusses several processes such as Poisson, Gaussian, Markovian and renewal processes. 
+        Lastly, the book discusses hypothesis testing, martingales and estimation theory. 
+        Without doubt, an excellent introduction to the topic for the uninitiated. 
+ \item \label{cite:RLWolpert05} \bibentry{RLWolpert05}: Lecture notes with a succinct presentation 
+	of some very useful results, but without many proofs. 
+	Available at \url{https://www2.stat.duke.edu/courses/Spring05/sta205/lec/s05wk07.pdf}.
+ \item \label{cite:cinlar2011} \bibentry{cinlar2011}: A fantastic book for one's first 
+       steps in probability theory with 
        emphasis on random processes, filtrations, Martingales, stopping times and convergence 
        theorems, Poisson random measures, L{\'{e}}vy and Markovian processes and Brownian motion.
  \item \label{cite:Kallnberg} \bibentry{Kallnberg}: The definitive reference for researchers. In its 23 chapters
@@ -1487,11 +1743,17 @@ Bibliographic references including lecture notes and online resources with some 
  \item \label{cite:KSigman2009}\bibentry{KSigman2009}: Lecture notes by K. Sigman, Columbia University,
        \url{http://www.columbia.edu/~ks20/stochastic-I/stochastic-I.html}.
  \item \label{cite:DWalnut2011} \bibentry{DWalnut2011}: A short compilation of convergence theorems       
- \item \label{cite:Varadhan} \bibentry{Varadhan}: A lot of material on limit theorems starting from general measure theory,
-       to weak convergence results, limits of independent sums, results for dependent processes 
+ \item \label{cite:Varadhan} \bibentry{Varadhan}: A lot of material on limit theorems 
+       starting from general measure theory, to weak convergence results, limits 
+       of independent sums, results for dependent processes 
        with emphasis on Markov chains, a comprehensive introduction to martingales, stationary processes
-       and ergodic theorems and some notes on dynamic programming. Online at \url{https://www.math.nyu.edu/faculty/varadhan/}.
- \item \label{cite:LinBai2011} \bibentry{LinBai2011}: several interesting (elementary and advanced) inequalities on probability spaces.       
+       and ergodic theorems and some notes on dynamic programming. 
+       Available online at \url{https://www.math.nyu.edu/faculty/varadhan/}.
+ \item \label{cite:LinBai2011} \bibentry{LinBai2011}: several interesting (elementary 
+       and advanced) inequalities on probability spaces.  
+ \item \label{cite:Ambrosio2013} \bibentry{Ambrosio2013}: A short note at
+       \url{http://planetmath.org/sites/default/files/texpdf/38346.pdf}
+       showing that almost surely bounded RVs have all their moments bounded.
 \end{enumerate}
 }
 
