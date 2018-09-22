@@ -1548,8 +1548,82 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 {}-{}
 	\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}.
 \end{align*}
+\end{enumerate}
+
+
+\subsection{Binomial distribution}
+\begin{enumerate}
+ \item (Definition). For \(n\in\N\) and \(p\in[0,1]\), we say that a random variable 
+       \(X:\Omega\to\{0,\ldots, n\}\) follows the Binomial distribution, we denote 
+       \(X \sim B(n,p)\), if its probability mass function is
+       \[
+        \prob[X = k] = {n \choose k} p^k (1-p)^{n-k},
+       \]
+       where \({n \choose k} = \frac{n!}{k!(n-k)!}\)
+ \item (Characteristics). If \(X \sim B(n,p)\), then \(\E[X]=np\), the median of \(X\) 
+       is either \(\lfloor np \rfloor\) or \(\lceil np \rceil\), its variance is 
+       \(\mathrm{Var}[X] = np(1-p)\) and moment generating function (MGF) of \(X\) is 
+       \(M_X(z) = (1-p+pe^z)^n\). The cumulative probability function of \(X\) is given 
+       in terms of the regularized incomplete beta function
+       \[
+        \prob[X \leq x] = I_{1-p}(n-k, k+1)
+       \]
+ \item (Sum of independent Binomials). Let \(X\sim B(n,p)\) and \(Y\sim B(m,p)\) be 
+       independent random variables. Then, \(X+Y\) follows the Binomial distribution
+       \(B(n+m, p)\).
+       
+ \item (Binomial sum variance inequality). Let \(X\sim B(n,p)\) and \(Y\sim B(n',p')\) 
+       be two random variables, not necessarily independent. Let \(S=X+Y\). Then,
+       \[
+        \mathrm{Var}[S] \leq \E[S]\frac{1-\E[S]}{n+n'}.
+       \]
+       
+ \item (De Moivre-Laplace theorem). For large \(n\) and \(k\) in the neighbourhood of \(np\),
+       it is 
+       \[
+        {n \choose k} p^k (1-p)^{n-k} \approxeq \frac{1}{\sqrt{2\pi n p (1-p)}}e^{-\frac{(k-np)^2}{2np(1-p)}}.
+       \]
+       As an example, consider the experiment of tossing \(n\) coins a large number of times 
+       and observing the number of heads each time. Then, as \(n\) grows large, the shape of 
+       the distribution of the number of heads approaches that of the normal distribution.
+\end{enumerate}
+
+
+\subsection{Poisson distribution}
+\begin{enumerate}
+ \item (Definition). We say that a random variable \(X:\Omega\to\N\) follows the Poisson distribution
+       with parameter \(\lambda\) if its probability mass function is
+       \[
+        \prob[X = k] = \frac{\lambda^k e^{-\lambda}}{k!}
+       \]
+       We denote \(X\sim\mathrm{Poisson}(\lambda)\).
+ \item (Characteristics). If \(X\sim\mathrm{Poisson}(\lambda)\), then \(\E[X]=\lambda\), 
+       \(\mathrm{Var}[X]=\lambda\) and the moment generating function (MGF) of \(X\) is 
+        \(M_X(z) = \exp(\lambda (e^z - 1))\). The median of \(X\) is in the interval 
+        \([\lambda - \ln 2, \lambda + \nicefrac{1}{3}\).
+        
+ \item (Sum of independent Poissons). Let \(X_i\), \(i\in\N_{[1,N]}\), be independent random 
+       variables with \(X_i\sim\mathrm{Poisson}(\lambda_i)\). Define the random variable 
+       \(S = X_1 + \ldots + X_N\) and \(\lambda = \lambda_1 + \ldots + \lambda_N\), then
+       \(S \sim \mathrm{Poisson}(\lambda)\).
+       
+ \item (Raikov's theorem). If the sum of two independent nonnegative random variables, 
+       \(X\) and \(Y\), follows the Poisson distribution, then both \(X\) and \(Y\)
+       follow the Poisson distribution.
+       
+ \item (Law of rare events/Poisson limit theorem). Let \((p_n)_{n\in\N}\) be a sequence of 
+       numbers in \([0,1]\) such that \(np_n\) converges to a limit \(\lambda\). Then
+       \[
+        \lim_{n\to\infty}\smashunderbracket{{n \choose k} p_n^k (1-p_n)^{n-k}}{\text{Binomial PMF}} 
+        =
+        \smashunderbracket{e^{-\lambda}\frac{\lambda^k}{k!}}{\text{Poisson PMF}}.
+       \]
+ \item (Large \(\lambda\)). For large values of \(\lambda\), e.g., \(\lambda>10^3\), the 
+       normal distribution \(\mathcal{N}(\lambda, \lambda)\), is considered 
+       a good approximation to \(\mathrm{Poisson}(\lambda)\).
 
 \end{enumerate}
+
 
 
 \section{Stochastic Processes}
@@ -1660,6 +1734,21 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
        \]
 
 \end{enumerate}
+
+
+\subsection{Brownian motion and Wiener processes}
+\begin{enumerate}
+ \item (Definition). A stochastic process \((X_t)_{t\in \Re_+}\) on \((\Re, \mathcal{B}(\Re))\) is 
+ called Brownian motion if it is continuous and has stationary independent increments. A process 
+ \((W_t)_{t\in\Re_+}\) is called a Wiener process if it is a Brownian motion with 
+ \begin{enumerate}[i.]
+  \item \(W_0 = 0\)
+  \item \(\E[W_t] = 0\)
+  \item \(\E[W_t^2] = t\) for all \(t\in\Re_+\)
+ \end{enumerate}
+
+\end{enumerate}
+
 
 
 \subsection{Markov processes}
@@ -2149,7 +2238,7 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 \begin{enumerate}
  \item (Kernel function%
       \footnote{This should not be confused with \textit{transition kernels}, 
-                which we discussed in Section \ref{sec:transition_kernel}}).  
+                which we discussed in Section \ref{sec:transition_kernel}.}).  
        A kernel function is a symmetric continuous function \(K: [a,b] \times [a,b] \to \Re\).
        \(K\) is called positive semidefinite if \(\sum_{i,j=1}^{n} c_i c_j K(x_i,x_j) \leq 0\),
        for all scalars \((c_i)_{i=1}^{n}\) and \((x_i)_{i=1}^{n}\) in \([a,b]\) and all
@@ -2195,7 +2284,10 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
         \int_{a}^{b} R_X(s,t) e_i(s) \d s = \lambda_i e_i(t),
        \]
        for all $i\in\N$.
- \item (Corollary of KKL theorem). Let \((X_t)_{t\in T}\), \(T=[a,b]\), be a stochastic process 
+ \item (Corollary of KKL theorem%
+	\footnote{For applications of the KKL theorem to decompose stochastic processes, see 
+	\url{http://amslaurea.unibo.it/10169/1/Giambartolomei_Giordano_Tesi.pdf}}.). 
+	Let \((X_t)_{t\in T}\), \(T=[a,b]\), be a stochastic process 
        which satisfies the requirements of the Kosambi-Karhunen-Lo{\`e}ve theorem. Then, there 
        exists a basis \((e_i)_i\) of \(\mathcal{L}^2(T)\) such that for all \(t\in T\)
        \[
@@ -2211,19 +2303,31 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 
 \subsection{Orthogonal polynomials}
 \begin{enumerate}
- \item (Orthogonality wrt random variable). Let $\Xi$ be a real-valued random variable with 
-       probability density function $p_\Xi$. Let \(\psi_1,\psi_2:\Omega\to\Re\) be two polynomials. 
-       We define the scalar product
+ \item (Space of polynomials). Let \(\mathsf{P}_N(I)\) denote the space of polynomials \(\psi:I\to\Re\) of degree
+       \(N\in\N\). 
+ \item (Weighted \(\mathcal{L}^2_w\) space). For two functions \(\psi_1,\psi_2:I\to\Re\), we define the scalar product
        \[
-        \<\psi_1, \pi_2\>_{\Xi} = \int_{-\infty}^{\infty}p_\Xi(\tau) \psi_1(\tau) \psi_2(\tau) \d \tau.
+        \<\psi_1, \psi_2\>_{w} = \int_{I}w(\tau) \psi_1(\tau) \psi_2(\tau) \d \tau.
        \]
+       and the corresponding norm \(\|f\|_2 = \<f,f\>_w\). Define the space
+       \[
+        \mathcal{L}^2_w(I) = \{f:I\to\Re \mid \|f\|_2 < \infty\}.
+       \]
+       For a random variable \(\Xi:\ofp\to\Re\) with PDF \(p_\Xi\), we define 
+       \[
+        \<\psi_1, \psi_2\>_{\Xi} {}\dfn{} \<\psi_1, \psi_2\>_{p_{\Xi}}.
+       \]
+
+ \item (Orthogonality wrt random variable). Let $\Xi$ be a real-valued random variable with 
+       probability density function $p_\Xi$. Let \(\psi_1,\psi_2:\Omega\to\Re\) be two polynomials.        
        We say that \(\psi_1,\psi_2\) are orthogonal with respect to (the pdf of) \(\Xi\) if 
        \(\<\pi_1, \pi_2\>_{\Xi} = 0\).
  \item Let \(\psi_0, \psi_2,\ldots\), with \(\psi_0=1\), be a sequence of orthogonal polynomials.
        Then,
        \[
         0 = \< \psi_0, \psi_1 \>_\Xi
-          = \int_{-\infty}^{\infty} p_{\Xi} \psi_{1}(\Xi(s)) \d s
+          = \int_{-\infty}^{\infty} \psi_{1}(s) 
+          \smashunderbracket{p_{\Xi}(s) \d s}{\d (\Xi_* \prob)}
           = \E[\psi_1(\Xi)],
        \]
        by virtue of LotUS. Recursively, \(\E[\psi_i(\Xi)] = 0\) for all \(i\).
@@ -2231,7 +2335,12 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
  \item (Hermite polynomials). Let \(\Xi\) be distributed as \(\mathcal{N}(0,1)\).
        Then, its pdf is \(p_{\Xi}(s) = 1\) and the polynomials \(\psi_0,\psi_1,\ldots\) are the 
        Hermite polynomials, the first few of which are \(H_0(x)=1\), \(H_1(x)=x\), \(H_2(x)=x^2-1\),
-       \(H_3(x) = x^3 - 3x\). These are orthogonal with respect to \(\Xi\).
+       \(H_3(x) = x^3 - 3x\). These are orthogonal with respect to \(\Xi\), that is
+       \[
+        \<H_i, H_j\>_\Xi = \int_{-\infty}^{\infty}H_i(s) H_j(s) e^{-\frac{s^2}{2}}\d s = 0,
+       \]
+       for \(i\neq j\).
+
        
  \item (Legendre polynomials). If \(\Xi\sim U([-1,1])\), then \(\psi_0,\psi_1,\ldots\) are the 
         Legendre polynomials. If, instead, \(\Xi\sim U([-1,1])\), the coefficients of the 
@@ -2239,15 +2348,125 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
         
  \item (Laguerre polynomials). If the germ is an exponential random variable on \([0,\infty)\),
        then \(\psi_0,\psi_1,\ldots\) are the Laguerre polynomials.
+       
+ \item (Polynomial projection). Let \(\mathcal{M}_N = \{\psi_i\}_{i=0}^{N} \subseteq \mathsf{P}_N(I)\) be a set of orthogonal polynomials
+       \(\psi_i:I\to\Re\) with respect to the inner product \(\<{}\cdot{}, {}\cdot{}\>_w\).
+       We define the projection operator onto \(\mathcal{M}_N\) as
+       \[
+        P_N:\mathcal{L}^2_w(I) \ni f \mapsto P_N f \dfn \sum_{j=0}^{N}\hat{f}_j \psi_j \in \mathsf{P}_N,
+       \]
+       where 
+       \[
+	 \hat{f}_j = \nicefrac{1}{\|\psi_j\|^2}\<f, \psi_j\>_w.
+       \]
+ \item (Properties of polynomial projection). It is easy to see that \(P_N f = f\) for all \(f\in\mathsf{P}_N(I)\),
+       whereas, for \(g {}{\,}\bot{\,}{} \mathsf{P}_N(I)\) it is \(P_N g = 0\).
+
+ \item (Best approximation). For \(f\in\mathcal{L}^2_w(I)\),        
+       \[
+        \|f - P_N f \|_{w} = \inf_{\psi\in\mathsf{P}_N(I)}\|f - \psi\|_{w} 
+       \]
+       Additionally, the approximation error, \(e_f \dfn f - P_Nf\) is orthogonal to \(\mathsf{P}_N(I)\), 
+       that is, \(\<e_f, \psi_i\>_w = 0\) for all \(i\in\N_{[0,N]}\).
+
+ \item (Approximation properties). For  \(f\in\mathcal{L}^2_w(I)\)\footnote{In certain cases, we may derive approximation 
+       bounds. For example, for \(f\) in the weighted Sobolev space 
+	    \(
+		H_{w}^p([-1,1])
+		{}={}
+		\{
+		  g: [-1,1]\to\Re 
+		  {}\mid{}
+		  \nicefrac{\d^i g}{\d \tau^i} \in \mathcal{L}^2_w([-1,1]),
+		  i=0,\ldots,p
+		\}
+	    \),
+	    equipped with the inner product 
+	    \[
+		\<f,g\>_{H_{w}^p([-1,1])} 
+		{}={}
+		\sum_{j=0}^{p}
+		\left\<
+		  \frac{\d^j g}{\d \tau^j},
+		  \frac{\d^j g}{\d \tau^j}
+		\right\>_{\mathcal{L}_w^2([-1,1])}
+	    \]
+	    and induced norm \(\|f\|_{H_{w}^p([-1,1])} = \<f,f\>_{H_{w}^p([-1,1])}^{\nicefrac{1}{2}}\),
+	    and with \(\mathcal{M}_N\) being the set of Legendre polynomials on \([-1,1]\),
+	    we have that there is a constant \(c\), independent of \(N\), so that \(\|f-P_Nf\| \leq \nicefrac{c}{N}\|f\|_{H_{w}^p([-1,1])}\).
+	    %
+	    }, define \(f_N = P_N f\). Then,
+	\[
+	  \lim_{N\to\infty}\|f - f_N\|_{w} = 0.
+	\]
+ \item (Strong/weak approximation). An approximation \(f_N\) which converges, as \(N\to\infty\), to \(f\) as the 
+       above best approximation (via polynomial projection), is called a strong approximation. An approximation
+       \(f_N\) which converges in a weaker sense (e.g., in probability) is called weak.
 \end{enumerate}
 
-\subsection{Polynomial chaos expansions}
+\subsection{Generalized polynomial chaos expansions}
 \begin{enumerate}
  \item (Polynomial chaos expansions). Given a random variable \(X\), a polynomial chaos expansion 
        is a function \(f\) so that for a given random variable \(\Xi\) with known distribution, 
        called a ``germ,'' it holds that \(X \overset{d}{=} f(\Xi)\) (the notation \(\overset{d}{=}\)
        means that the distributions of the two random variables are equal).
+ \item (Weak approximation theorem). Let \(X\) be a random variable of \(\mathcal{L}^2\ofp\) with 
+       cumulative distribution function \(F_X\). Let \(\Xi\) be a germ in \(\mathcal{L}^{2N}\ofp\)
+       with distribution \(F_\Xi\) and 
+       \[
+        \<\psi_i, \psi_j\>_\Xi = \delta_{i,j}\gamma_i,
+       \]
+       for all \(i,j\in\N_{[0,N]}\). Let
+       \[
+        X_N = \sum_{j=0}^{N}\alpha_j \psi_j(\Xi),
+       \]
+       where 
+       \[
+        \alpha_j = \nicefrac{1}{\gamma_j} \int_0^1 \psi_j(u) F_{X}^{-1}(F_{\Xi}(u)) \d F_{\Xi}(u),
+       \]
+       Then, as \(N\to\infty\), \(X_N\to X\) in probability\footnote{%	      
+	      \(X\) can be approximated by projecting on the space spanned by the 
+	      orthogonal polynomials \(\mathcal{M} = \{\psi_i\}_{i=0}^{N}\) leading
+	      to an approximation \(X_N = \sum_{j=0}^{N} \alpha_j \psi_j(\Xi)\), where
+	      the coefficients \(\alpha_j\) are computed by \(\alpha_j {}={} \<X, \psi_j\>_\Xi/\gamma_j\).
+	      The problem is that the inner product \(\<X, \psi_j\>_\Xi\), typically, cannot be 
+	      evaluated.
+	      The trick is that \(X \overset{d}{=} F_X^{-1}(U)\), where \(U\) is a random variable
+	      which is uniformly distributed on \([0,1]\); one such variable is \(U=F_{\Xi}(\Xi)\), 
+	      therefore, \(X \overset{d}{=} F_{X}^{-1}(F_{\Xi}(\Xi))\). This leads to the above formula.
+	      The integral can be evaluated by quadrature methods.
+       }.
+
+ \item (Non-intrusive solution) Let \(X\) be a random variable on \(\ofp\) and \(Y=f(X)\). Suppose we have obtained a
+       truncated PC expansion for \(X\). The question uncertainty propagates from \(X\) to \(Y\)
+       via \(f\); in other words, what is the distribution of \(Y\). For \(N\in\N\), let \(X_N\) be 
+       a PC expansion of \(X\) as follows
+       \[
+        X_N = \sum_{j=0}^{N} x_j \psi_j(\Xi) = f_N(\Xi)
+       \]
+       Let \(Y_N\) be the desired approximation (we take the approximation length to be the same and 
+       the orthogonal polynomial basis to be also the same), 
+       \(
+        Y_N = \sum_{j=0}^{N} y_j \psi_j(\Xi).
+       \)
+       It follows that 
+       \[
+        y_k = \nicefrac{1}{\|\psi_k\|^2_\Xi} \cdot \<\psi_k, \eta\circ f_N\>_\Xi =  \nicefrac{1}{\|\psi_k\|^2_\Xi} \cdot \int \eta(f_N(u)) \psi(u) p_\Xi(u) \d u,
+       \]
+       and the integral can be evaluated using a quadrature method, or even simple Monte Carlo, that is
+       \(
+       \int \eta(f_N(u)) \psi(u) p_\Xi(u) \d u 
+       \approx 
+       N_{\mathrm{mc}}^{-1}\sum_{i=1}^{N_{\mathrm{mc}}} \eta(f_N(u^{(i)})) \psi(u^{(i)}) p_\Xi(u^{(i)})
+       \)
+       where \(u^{(i)}\) are samples from the distribution of \(\Xi\).
+
+
 \end{enumerate}
+
+
+
+\subsection{Arbitrary polynomial chaos expansions}
 
 
 \section{Bibliography with comments}
@@ -2292,7 +2511,8 @@ Bibliographic references including lecture notes and online resources with some 
        polynomial chaos. The author questions certain aspects of polynomial chaos from 
        a statistics standpoint.
  \item \label{cite:DXiu10} \bibentry{DXiu10}: A proper theoretical treatise on polynomial chaos
-       and several other topics related to approximations of (multivariate) probability distributions
+       and several other topics related to approximations of (multivariate) probability distributions.
+ \item \label{cite:Eldred2009} \bibentry{Eldred2009}       
 \end{enumerate}
 }
 

@@ -131,3 +131,9 @@
 \newtheorem{proposition}[thm]{Proposition}		% proposition	Proposition
 \newtheorem{assumption}[thm]{Assumption}		% assumption 	Assumption
 \newtheorem{definition}[thm]{Definition}		% definition 	Definition
+
+
+ \newcommand\smashunderbracket[3][0.5pt]{%
+	      \vphantom{#2}%
+	      \smash{\underbracket[#1]{#2}_{#3}}%
+      }
