@@ -14,6 +14,7 @@
 \nobibliography*
 
 \renewcommand{\cov}{\operatorname{cov}}
+\newcommand{\comingSoon}{Work in progress (this section will be updated in the upcoming version). Stay tuned on Twitter for updates (\texttt{@isToxic}).}
 
 
 \hypersetup{
@@ -56,7 +57,10 @@
   engineering. 
   The readers may find a list of bibliographic references with comments at the end
   of this document. This is still work in progress, so several important results are 
-  still missing
+  still missing.
+  
+  This document, as well as its future versions, will be available at 
+  \url{https://mathematix.wordpress.com/probability-cookbook}. 
 % \end{abstract}
 
 \chapter{Probability Theory}
@@ -443,7 +447,7 @@
         \sum_{k=1}^{\infty} \E[Y_k] = \E \left[\sum_{k=1}^{\infty}Y_k\right].
        \]
 
- \item (Uniform integrability -- definition)~[\ref{cite:KSigman2009}]. A collection $\{X_k\}_{k\in T}$ is said to be \textit{uniformly
+ \item (\hypertarget{link:uniformly_integrable}{Uniform integrability} -- definition)~[\ref{cite:KSigman2009}]. A collection $\{X_k\}_{k\in T}$ is said to be \textit{uniformly
         integrable} if $\sup_{t\in T}\E[|X_t| 1_{|X_t|>x}] \to 0$ as $x\to\infty$.
         
  \item (Constant absolutely integrable sequences as uniformly integrable)~[\ref{cite:KSigman2009}]. The sequence $\{Y\}_{t\in T}$
@@ -453,8 +457,8 @@
        If $\{X_t\}_{t\in T}$ is uniformly bounded in $\mathcal{L}^p$, $p>1$ (that is, 
        $\E[|X_k|^p] < c$ for some $c>0$), then it is uniformly integrable.
        
- \item (Convergence under uniform integrability)~[\ref{cite:KSigman2009}]. If $X_k \to X$ a.s. and $\{X_k\}_k$ is uniformly 
-       integrable then
+ \item (Convergence under uniform integrability)~[\ref{cite:KSigman2009}]. 
+       If $X_k \to X$ a.s. and $\{X_k\}_k$ is \hyperlink{link:uniformly_integrable}{uniformly integrable} then
        \begin{enumerate}[i.]
          \item $\E[X]< \infty$
          \item $\E[X_k] \to \E[X]$        
@@ -496,7 +500,7 @@
  \[
   \int_{\mathcal{X}} g \d \mu = \int_{\mathcal{X}} g \frac{\d \mu}{\d \lambda}\d \lambda.
  \]
- \item (Change of variables in integration). This was addressed using the push-forward. 
+ \item (\hypertarget{link:lotus}{Change of variables in integration}). This was addressed using the push-forward. 
  \[
   \E[g(X)] = \int g\circ X\d\prob = \int_\Re g \,\d(X_*\prob).
  \]
@@ -538,11 +542,12 @@
  
  \item 
  \label{rv221137}
- We associate with $F_X:\Re\to[0,1]$ the measure $\mu$ which is defined on 
+ (Associated $p$-system). We associate with $F_X:\Re\to[0,1]$ the measure $\mu$ which is defined on 
  the $p$-system $\{(-\infty,x]\}_{x\in\Re}$ as $\mu((-\infty, x]) = F_X(x)$.
+ 
  \item
  \label{rv231132}
- Properties of the cumulative and the inverse cumulative distributions. The notation
+ (Properties of the cumulative and the inverse cumulative distributions). The notation
  $X\sim Y$ means that $X$ and $Y$ have the same cumulative distribution, that is 
  $F_X = F_Y$.
     \begin{enumerate}[i.]
@@ -754,7 +759,7 @@ theorem offers some further insight.
        \[
         \int_{\mathcal{X}}f\d\mu = \int_{\mathcal{Y}}g\d\nu = \int_{\mathcal{X}\times\mathcal{Y}}g\d(\mu\times \nu).
        \]
- \item (Fubini's Theorem). 
+ \item (\hypertarget{link:fubini}{Fubini's Theorem}). 
        Let $h:\mathcal{X}\times \mathcal{Y}\to \Re$ be an $\F\otimes\mathcal{G}$-measurable
        function and
        \[
@@ -1019,7 +1024,7 @@ theorem offers some further insight.
 \subsection{Construction of probability spaces}
 \begin{enumerate}
  \item (Inonescu-Tulcea's Theorem). 
- \item (Kolmogorov's Extension Theorem). Let \(T\) denote a time interval, \(k\in\N\) and let 
+ \item (\hypertarget{link:kolmogorov_extension_thm}{Kolmogorov's Extension Theorem}). Let \(T\) denote a time interval, \(k\in\N\) and let 
        \(\nu_{t_1,\ldots, t_k}\) be probability measures on \(\Re^{nk}\) such that 
        \begin{enumerate}
         \item For all permutations \(\pi\) on \(\{1,\ldots, k\}\) it holds that 
@@ -1262,8 +1267,32 @@ theorem offers some further insight.
         \sum_{n\in\N}\prob[|X_n-X|>\epsilon_n] < \infty.
        \]     
        
- \item (Cauchy criterion). The sequence $\{X_n\}_n$ is convergent almost surely if and only if
+ \item (Cauchy criterion). The sequence $(X_n)_n$ is convergent almost surely if and only if
        $\lim_{m,n\to \infty}|X_n-X_m|\to 0$ almost surely.
+       
+ \item (Kolmogorov's three-series theorem). Let $(X_n)_n$ be a sequence of independent random
+       variables. The random series $\sum_{n}X_n$ converges almost surely in \(\Re\) if and only if
+       the following conditions hold for some \(\epsilon>0\):
+       \begin{enumerate}[i.]
+        \item \(\sum_n \prob[|X_n| > \epsilon]\) converges
+        \item Let \(Y_n = X_n 1_{|X_n| \leq \epsilon}\). Then, \(\sum_n \E[Y_n]\) converges
+        \item \(\sum_n \operatorname{var}Y_n\) converges
+       \end{enumerate}
+ \item (Consequence of Kolmogorov's three-series theorem: Random harmonic series). 
+       Let \(X_n\) be a sequence of independent random variables taking the values 
+       \(\{-1, 1\}\), each with probability \(\nicefrac{1}{2}\). 
+       Then, \(\sum_{n}\frac{X_n}{n}\) converges almost surely. This is proven using 
+       Kolmogorov's three-series theorem with \(\epsilon=2\).%
+          \footnote{More on random harmonic series can be found in B. Schmuland, 
+	  ``Random Harmonic Series,'' American Mathematical Monthly 110: 407--416, 2003, 
+	  \href{http://www.math.nus.edu.sg/~matsr/ProbI/Lecture4.pdf}{doi:10.2307/3647827}. 
+	  There the author explains that the pdf of \(\sum_{n}\frac{X_n}{n}\)
+	  evaluated at \(2\) differs from \(\nicefrac{1}{8}\) by less than \(10^{-42}\).}
+ \item (Kolmogorov's two-series theorem).  Let $(X_n)_n$ be a sequence of independent random
+       variables with expected values \(\E[X_n] = \mu_n\) and variances \(\operatorname{var}[X_n] 
+       = \sigma_n^2\) such that \(\sum_n \mu_n\) and \(\sum_n \sigma_n^2\) converge in \(\Re\). Then, 
+       \(\sum_n X_n\) converges in \(\Re\) almost surely.
+       
        
  \item (Continuous mapping theorem). Let $X_n \overset{a.s.}{\to} X$ and $g$ be a (almost everywhere)
        continuous mapping. Then
@@ -1279,7 +1308,9 @@ theorem offers some further insight.
 
 \subsection{Convergence in probability}       
 \begin{enumerate}
- \item (Convergence in probability). We say that the stochastic process $(X_n)_n$ converges to a random variable $X$
+ \item 
+      (\hypertarget{link:convergence_in_probability}{Convergence in probability}). 
+      We say that the stochastic process $(X_n)_n$ converges to a random variable $X$
        in probability if for every $\epsilon>0$,
        \[
         \lim_n \prob[|X_n-X|>\epsilon] = 0.
@@ -1330,8 +1361,9 @@ theorem offers some further insight.
 \begin{enumerate}        
  \item (Convergence in $\mathcal{L}^p\ofp$). We say that $X_k$ converges to $X$ in $\mathcal{L}^p$ 
        if $X,X_k\in\mathcal{L}^p$ for all $k\in\N$ and $\|X_k-X\|_p\to 0$.
- \item (Convergence $\mathcal{L}_1$ under uniform integrability). If $X_n \to X$ in probability and $(X_n)_n$ is uniformly
-       integrable, then $X_n\to X$ in $\mathcal{L}_1$.
+ \item (Convergence $\mathcal{L}_1$ under uniform integrability). 
+       If $X_n \to X$ in probability and $(X_n)_n$ is 
+       \hyperlink{link:uniformly_integrable}{uniformly integrable}, then $X_n\to X$ in $\mathcal{L}_1$.
  \item (In $\mathcal{L}_s\ofp$ $\Rightarrow$ in $\mathcal{L}^p\ofp$, for $s>p\geq 1$). 
  \item (Scheff\'e's theorem). Let $X_n\in\mathcal{L}_1$, $X\in\mathcal{L}_1$ and $X_n\to X$ almost surely. The following are 
        equivalent:
@@ -1346,7 +1378,7 @@ theorem offers some further insight.
        Suppose that $X_n\in\mathcal{L}^p$, $p\in[1,\infty)$ and $X_n\to X$ in probability.
        The following are equivalent
        \begin{enumerate}[i.]
-        \item $\{X_n\}_n$ is uniformly integrable
+        \item $\{X_n\}_n$ is \hyperlink{link:uniformly_integrable}{uniformly integrable}
         \item $X_n\to X$ in $\mathcal{L}^p$
         \item $\E[|X_n|^p] \to \E[|X|^p]$
        \end{enumerate}
@@ -1491,14 +1523,16 @@ Let $g:\Re\to\Re$ be function which is differentiable at $\theta$. Then,
   \item (Weak law of large numbers). Also known as Bernoulli's theorem. Let $\{X_k\}_k$ be
        a sequence of independent identically distributed random variables, each having a 
        finite mean $\E[X_k]=\mu$ and finite variance $\sigma^2$. Define 
-       $\bar{X}_k=\nicefrac{1}{k}(X_1+\ldots+X_k)$. Then $\bar{X}_k\to \mu$ in probability.
-   \item (Strong law of large numbers). Let $\{X_k\}_k$ and $\bar{X}_k$ be as above.
+       $\bar{X}_k=\nicefrac{1}{k}(X_1+\ldots+X_k)$. Then $\bar{X}_k\to \mu$ 
+       \hyperlink{link:convergence_in_probability}{in probability}.
+   \item (\hypertarget{link:sLLN}{Strong law of large numbers}). Let $\{X_k\}_k$ and $\bar{X}_k$ be as above.
          Then $\bar{X}_k\to \mu$ almost surely.    
    \item (Uniform law of large numbers).  Let $f(x,\theta)$ be a function defined over
          $\theta\in\Theta$. For fixed $\theta$ and 
          a random process $\{X_k\}_k$ define $Z_k^\theta \dfn f(X_k, \theta)$. Let 
          $\{Z_k^\theta\}_k$ be a sequence of independent and identically distributed 
-         random variables, such that the sample mean converges in probability to $\E[f(X, \theta)]$. 
+         random variables, such that the sample mean converges 
+         \hyperlink{link:convergence_in_probability}{in probability} to $\E[f(X, \theta)]$. 
          Suppose that (i) $\Theta$ is compact, (ii) $f$ is continuous 
          in $\theta$ for almost all $x$ and measurable with respect to $x$ for each $\theta$,
          (iii) there is a function $g$ such that $\E[g(X)]<\infty$ and $\|f(x,\theta)\| \leq g(x)$ 
@@ -1550,6 +1584,32 @@ Let $g:\Re\to\Re$ be function which is differentiable at $\theta$. Then,
  \[
   \sqrt{n} (g(X_n) - g(\theta)) \overset{d}{\to} \mathcal{N}(0, \sigma^2[g'(\theta)]^2)
  \]
+ 
+ \item (Glivenko-Cantelli Theorem). Let $X_1, X_2, \ldots, X_N$ be independent and identically
+       distributed real-valued random variables with a common cumulative distribution function 
+       $F(x)$. The \textit{empirical distribution} of $X_1, X_2, \ldots, X_N$ is 
+       \[
+        F_N(x) = \frac{1}{n}\sum_{i=1}^{n}1_{[X_i, +\infty)}(x). 
+       \]
+       Then, 
+       \[
+        \|F_N - F\|_\infty {}\dfn{} \sum_{x\in \Re}|F_n(x) - F(x)| \to 0,
+       \]
+       almost surely as $N\to\infty$\footnote{The almost sure pointwise convergence of $F_N$ to $F$
+       follows from the \hyperlink{link:sLLN}{strong law of large numbers}. This is, therefore, a stronger result.}.
+
+ \item (Dvoretzky--Kiefer--Wolfowitz inequality). 
+       This inequality is a stronger result compared to the Glivenko-Cantelli Theorem above
+       as it gives the rate of convergence of the empirical distribution to the actual one.
+       Let $X_1,\ldots, X_N$ and $F$, $F_N$ be as above. Then,
+       \[
+        \prob[\|F_N-F\|_{\infty} > \epsilon] \leq e^{-2n\epsilon^2},
+       \]
+       for $\epsilon \geq \sqrt{\frac{1}{2n}\ln 2}$ and
+       \[
+        \prob[\|F_N-F\|_{\infty} > \epsilon] \leq 2e^{-2n\epsilon^2},
+       \]
+       for $\epsilon > 0$.
 
  
 
@@ -1592,7 +1652,8 @@ Let $g:\Re\to\Re$ be function which is differentiable at $\theta$. Then,
 
 \subsection{Normal distribution}\label{sec:normal_distribution}
 \begin{enumerate}
- \item (Definition: univariate case). For a real-valued random variable \(X\), the PDF \(f_X\) of the normal 
+ \item (\hypertarget{link:normal-distribution}{Definition: univariate case}). 
+        For a real-valued random variable \(X\), the PDF \(f_X\) of the normal 
        distribution on \(\Re\) with parameters \(\mu\) and \(\sigma\) is given by
  \[
   f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),
@@ -1624,9 +1685,22 @@ Let $g:\Re\to\Re$ be function which is differentiable at $\theta$. Then,
         p_X(x) = |2\pi \Sigma|^{-\nicefrac{1}{2}}\exp\left(-\tfrac{1}{2}(x-\mu)^{\top}\Sigma(x-\mu)\right).
        \]
 
+ \item (Isserlis' theorem -- high-order moments of multivariate normal). Let \(X= (X_1, \ldots, X_{2n})\)
+       follow the multivariate normal distribution with zero mean and covariances 
+       $\Sigma_{i,j} = \operatorname{cov}(X_i, X_j)$. Then,
+       \[
+        \E[X_1 X_2 \cdots X_{2n}] = \sum\prod \E[X_iX_j] = \sum\prod \operatorname{cov}(X_i, X_j),
+       \]
+       and 
+       \[
+        \E[X_1 X_2 \cdots X_{2n-1}] = 0.
+       \]
+
+
  
  \item (Linear transformation). Let $X\sim \mathcal{N}(\mu,\Sigma)$, $\mu\in\Re^n$, $\Sigma\in\Re^{n\times n}$ 
        and $Y=AX+b$ for constant $A$ and $b$. Then $Y\sim \mathcal{N}(A\mu+b, A\Sigma A')$.
+       
  \item (Conditioning). Let $X_1$, $X_2$ be two random variables with values in $\Re^{n_1}$ and $\Re^{n_2}$
        respectively. Suppose that
 \begin{equation*}
@@ -1658,6 +1732,13 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 {}-{}
 	\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}.
 \end{align*}
+
+\item (\(\chi^2\) distribution). If \(X\) is an \(n\)-dimensional random variable and 
+      \(X\sim \mathcal{N}(\mu, \Sigma)\), then 
+      \[
+       (X-\mu)^{\top}\Sigma^{-1}(X-\mu)
+      \] 
+      follows the \(\chi^2(n)\) distribution.
 \end{enumerate}
 
 
@@ -1739,9 +1820,9 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 \begin{enumerate}
  \item (Multivariate CDF). The cdf of a random variable \(X:\ofp\to\Re^d\) is the function 
        \begin{align*}
-        F_X(x_1, \ldots, x_d) =& \prob[X_1\leq x_1, \ldots, X_d \leq x_d]
+        F_X(x_1, \ldots, x_d) {}={}& \prob[X_1\leq x_1, \ldots, X_d \leq x_d]
         \\
-        =& \prob\left[\bigcap_{i=1,\ldots, d} \{X_i \leq x_i\}\right]
+        {}={}& \prob\left[\bigcap_{i=1,\ldots, d} \{X_i \leq x_i\}\right]
        \end{align*}
  \item (Multivariate CDF properties). The cdf \(F_X\) of a random variable \(X:\ofp\to\Re^d\)  
        has the following properties
@@ -1781,9 +1862,9 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
        function of \(U\), that is 
        \begin{align*}
         C(u_1, \ldots, u_d) 
-	  =& \prob[U_1 \leq u_1, \ldots, U_d \leq u_d]
+	  {}={}& \prob[U_1 \leq u_1, \ldots, U_d \leq u_d]
 	  \\
-	  =& \prob[X_1 \leq F_{X_1}^{-1}(u_1), \ldots, X_d \leq F_{X_d}^{-1}(u_d)].
+	  {}={}& \prob[X_1 \leq F_{X_1}^{-1}(u_1), \ldots, X_d \leq F_{X_d}^{-1}(u_d)].
        \end{align*}
        A \(d\)-dimensional copula is a function \(C:[0,1]^d\to[0,1]\)
        which is a joint cumulative distribution function of a \(d\)-dimensional random variable 
@@ -1855,6 +1936,60 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 \end{enumerate}
 
 \subsection{Examples of copulas}
+\begin{enumerate}
+ \item (Independence copula). The independence copula \(\Pi_d(u_1,\ldots, u_d) = 
+       u_1 u_2 \cdots u_d\), which is associated with random variables with 
+       independent marginals and uniformly distributed.
+ \item (Comonotonicity copula). The copula \(M_d(u_1,\ldots, u_d) =
+       \min\{u_1,\ldots, u_d\}\) which is associated with a random variable 
+       \(U = (U_1, \ldots, U_d)\) where \(U_i\) are uniformly distributed 
+       and \(U_1 = U_2 = \ldots = U_d\) almost surely. 
+ \item (Counter-monotonicity copula in 2D). We define the copula \(W_2(u_1, u_2)= \max\{u_1+u_2-1, 0\}\),
+       which is associated with a \(U = (U_1, U_2)\) where \(U_i\) are uniformly distributed on 
+       \(I\) and \(U_1 = 1-U_2\) almost surely.
+       
+ \item (Fr\'echet-Hoeffding bounds). For every \(d\)-dimensional copula \(C_d\) and \(u\in[0,1]^d\),
+       we have
+       \[
+        W_d(u) \leq C_d(u) \leq M_d(u),
+       \]
+       where \(W_d\) is the \(d\)-dimensional variant of the counter-monotonicity copula, \(W_2\)
+       shown above. This is defined as 
+       \[
+        W_d(u) = \max\left\{\sum_{i=1}^{d}u_i - d + 1, 0\right\}.
+       \]
+       For \(d>2\), \(W_d\) is not a copula. The above bounds are tight, that is,
+       \[
+        \inf_{C: \text{$d$-dim. copula}} C(u) = W_d(u) \quad \sup_{C: \text{$d$-dim. copula}} C(u) = M_d(u)
+       \]
+
+ \item (Convex combinations of copulas). Suppose that 
+ \begin{enumerate}[i.]
+  \item \(U\) and \(U'\) are two \(d\)-dimensional random 
+       variables on \(\ofp\), distributed with copulas \(C\) and \(C'\) respectively.
+  \item  \(Z\) is a random variable which follows the Bernoulli distribution with 
+       \(\prob[Z=1] = \alpha\) and \(\prob[Z=2] = 1-\alpha\). 
+  \item We define two functions \(\sigma, \sigma'\Re \to\{0,1\}\). 
+        Define \(\sigma(x) = \delta_1(x)\), that is, \(\sigma(1) = 1\) and 
+        \(\sigma(x) = 0\) for \(x\neq 1\). Similarly, define \(\sigma'(x) = \delta_2(x)\). 
+ \end{enumerate}
+Then, the random variable 
+\[
+ \bar{U} = \sigma(Z) U + \sigma' U',
+\]
+is distributed according to the copula 
+\[
+ \bar{C} = \alpha C + (1-\alpha) C'.
+\]
+  \item (Fr\'echet-Mardia family of copulas). Define the \(d\)-dimensional 
+  Fr\'echet-Mardia copula as
+  \[
+   C_d^{\mathrm{FM}} = \lambda \Pi_d + (1-\lambda)M_d,
+  \]
+  for \(\lambda \in [0,1]\).
+
+
+\end{enumerate}
 
 
 \chapter{Stochastic Processes}\label{sec:stoch-proc}
@@ -1897,81 +2032,82 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
        $\F_t = \sigma(\{X_s; s\in \T, s\leq t\})$ is called the filtration \textit{generated by $(X_n)_{n\in \T}$}.
        We say that $(X_n)_n$ is adapted to a filtration $(\F_n)_n$ if for all $n\in \T$, $X_n$ is $\F_n$-measurable.
        
- \item (Stopping times). Let $(\F_n)_n$ be a filtration on $\ofp$ and define $\overline{\T} \dfn \T \cup \{+\infty\}$.
+ \item (\hypertarget{link:stopping_time}{Stopping times}). Let $(\F_n)_n$ be a filtration on $\ofp$ and define $\overline{\T} \dfn \T \cup \{+\infty\}$.
        A random variable $T: \Omega \to \overline{\T}$ is called a stopping time if
        \[
         \{\omega {}\mid{} T(\omega) \leq t\} \in \F_t,
        \]
       for all $t\in \T$. This is equivalent to requiring that the process $Z_t = 1_{T \leq t}$ is adapted to $(\F_t)_{t\in \T}$.
       
+ \item (Wald's first identity)\footnote{Details and proofs for the three identities of Wald 
+       can be found in the lecture
+       notes of S. Lalley (\href{http://galton.uchicago.edu/~lalley/Courses/381/}{Statistics 381}).}. 
+       Let $(X_k)_{k\in\N}$ be a sequence of iid random variables with 
+       common finite mean, $\E[|X_i|] < \infty$. Let $\tau$ be a stopping time with 
+       $\E[\tau] < \infty$. Then,
+       \[
+        \E[X_1 + \ldots + X_\tau] = \E[\tau] \E[X_1].
+       \]
+       
+ \item (Wald's second identity). Let $(X_k)_{k\in\N}$ be a sequence of iid random variables with 
+       zero mean and common finite variance $\sigma^2 = \E[X_i^2] < \infty$. 
+       Let $\tau$ be a stopping time with 
+       $\E[\tau] < \infty$. Then,
+       \[
+        \E[(X_1 + \ldots + X_\tau)^2] = \sigma^2 \E[\tau].
+       \]      
+       
+ \item (Wald's third identity). Let $(X_k)_{k\in\N}$ be a sequence of nonnegative iid random variables with 
+       mean $\E[X_k]=1$.
+       Let $\tau$ be a bounded stopping time with 
+       $\E[\tau] < \infty$. Then,
+       \[
+        \E \prod_{i=1}^{T}X_i = 1.
+       \]             
+
  \item (A useful property). For any stochastic process $(X_n)_{n\in\N}$, we have
  \[
   \prob\left(\max_{i\leq k}|X_i|>\epsilon\right) = \prob\left(\sum_{i=0}^{k}X_i^2 \cdot  1_{\{|X_i|>\epsilon\}}>\epsilon^2\right).
  \]
  \item \label{it:kolmogorov-cont-theorem} 
-       (Kolmogorov's continuity theorem). Let \((X_t)_t\) be an \(\Re^{n}\)-valued stochastic process on \(\ofp\).
+       (\hypertarget{link:kolmogorov_continuity_thm}{Kolmogorov's continuity theorem}). Let \((X_t)_t\) be an \(\Re^{n}\)-valued stochastic process on \(\ofp\).
        Suppose that \((X_t)_t\) is such that for all \(t>0\) there 
        are positive constants \(\alpha, \beta, L\) such that 
        \[
         \E[\|X_{\tau} - X_{\tau'}\|^\alpha] \leq L |\tau' - \tau|^{1+\beta},
        \]
        for \(\tau \geq 0\) and \(\tau' \leq t\). Then, there is a continuous version of \(X\).
+       
+ \item (\hypertarget{link:cadlag}{c\`adl\`ag function}). Let \(M, d\) be a metric space and \(E \subseteq \Re\). A function \(f: E \to M\) is 
+       called a c\`adl\`ag (continue \`a droite, limite \`a gauche) function if for every \(t \in E\), 
+       \begin{enumerate}[i.]
+        \item \( \lim_{s \to t^{-}} f(s) \) exists
+        \item \( \lim_{s \to t^{+}} f(s) \) exists and is equal to \(f(t)\),
+       \end{enumerate}
+       that is, \(f\) is right-continuous and the limit from the left exists.
+
 \end{enumerate}
 
 
-\section{Random walk}
-\begin{figure}
- \centering
- \includegraphics[width=0.55\textwidth]{figures/randomWalk}
- \caption{Random walk: two different paths, \((X_t(\omega_1))_t\) and \((X_t(\omega_2))_t\).}
- \label{fig:random_walk}
-\end{figure}
-\begin{enumerate}
- \item (One-dimensional random walk). Take a sequence of independent random variables \((Z_{t})_{t\in\N}\) that take 
-       values in \(\{-1, 1\}\), each with probability \(0.5\). Define a random process 
-       \((X_t)_{t\in \N}\) with \(X_0=0\) and \(X_t = \sum_{i=1}^{t}Z_i\). The process \((X_t)_{t\in \N}\) is called
-       a (one-dimensional) (simple) random walk on \(\mathbb{Z}\). A random walk is shown in Figure~\ref{fig:random_walk}.              
-       
-       More generally, a random walk can be such that \(p\dfn\prob[Z_{t+1} - Z_{t} = 1] \neq \prob[Z_{t+1} - Z_{t} = -1]\).
-       
- \item (Characteristics). The expectation of random walk \((X_t)_{t\in\N}\) with \(p=\nicefrac{1}{2}\) 
-       is \(\E[X_t]=0\) and its variance is \(\E[X_t^2] = t\). Additionally,
-       \[
-        \lim_{t}\frac{\E[X_t]}{\sqrt{t}} = \sqrt{\frac{2}{\pi}}.
-       \]
- \item (Distribution of \(X_t\)). Let \((X_t)_t\) be a one-dimensional random walk with 
-       \(p\dfn \prob[X_{t+1} - X_{t} = 1]\) and define \(q \dfn 1-p\). 
-       For \(t\in\N\), \(t\geq 1\), random variables \(X_t\) take values on 
-       \(\mathcal{X}_t \dfn \{-t, -t+2, \ldots, t-2, t\}\) and their distribution is given by
-       \[
-        \prob[X_t = m] = {t \choose \tfrac{1}{2}(t+m)} p^{\tfrac{1}{2}(t+m)} q^{\tfrac{1}{2}(t-m)},
-       \]
-       for all \(m \in \mathcal{X}_t\)
-       This is the Binomial distribution on \(\mathcal{X}_t\) with parameter \(p\) 
-       (See definition in Section \ref{sec:binomial_distribution}).
- \item (Maximum of random walk). Let \(X_t\) be a simple symmetric random walk (with \(p=0.5\)
-       and define \(M_t = \max_{t'\leq t}X_{t'}\). Then, \(M_0=0\), the support of \(M_t\) is 
-       \(\{0,1,\ldots, t\}\) and 
-       \[
-        \prob[M_t = m] = \prob[X_t = m] + \prob[X_t = m+1] = {t \choose {\lfloor \tfrac{t+m+1}{2}\rfloor} }2^{-t}
-       \]
 
- \item (Gaussian random walk). Take a sequence of independent random variables \(Z_{t}\) with \(Z_t\sim\mathcal{N}(\mu, \sigma^2)\).
-       The random process \((X_t)_t\) with \(X_0=0\) and \(X_t = Z_1+\ldots+Z_t\) is called Gaussian random walk.
-       It is \(X_t\sim \mathcal{N}(t\mu, t\sigma^2)\).
-\end{enumerate}
 
 \section{Martingales}
 \begin{enumerate}
- \item (Martingale). A random process $(X_n)_n$ is called a \textit{martingale} if 
+ \item (Martingale --- discrete time). A random process $(X_n)_n$ is called a \textit{martingale} if 
 		     $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]=X_{n}$.
+ \item (Martingale --- continuous time). A random process \((X_t)_{t\geq 0}\) on a filtered probability 
+ space \((\Omega, \F, (\F_t)_{t\geq 0}, \prob)\) is called a \textit{martingale} if 
+ (i) it is adapted to \((\F_t)_{t\geq 0}\), (ii) for every \(t\geq 0\), \(\E[|X_t|] < \infty\), 
+ (iii) for all \(s, t\geq 0\) with \(s < t\) and all \(F \in \F_{s}\), \(\E[1_F (Y_t - Y_s)] = 0\), 
+ or, equivalently, \(Y_s = \E[Y_t \mid \F_s]\).
+ 
  \item (Martingale examples). The following are common examples of martingales:
   \begin{enumerate}
    \item Let $(X_n)_n$ be a sequence of iid random variables with mean $\E[X_n]=\mu$. Then
          $Y_n = \sum_{i=1}^{n}(X_i-\mu)$ is a martingale.
    \item Let $(X_n)_n$ be a sequence of iid random variables with mean $\E[X_n]=1$ and finite
          variance. Define a sequence of random variables with \(Y_0=0\) and 
-         \(Y_n = X_0 X_1 \cdot \ldots \cdot X_n\). Then, by the Cauchy-Swartz inequality,
+         \(Y_n = X_0 X_1 \cdot \ldots \cdot X_n\). Then, by the Cauchy-Schwartz inequality,
          \(Y_n\) is a martingale.
    \item If $(X_n)_n$ is a sequence of iid random variables with mean $1$, then 
          $Y_n = \prod_{i=1}^{n}X_i$ is a martingale.
@@ -1983,7 +2119,8 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
  \item (Sub- and super-martingales). A random process $(X_n)_n$ is called a \textit{super-martingale} if 
 		     $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\leq X_{n}$. Likewise, it 
 		     is a \textit{sub-martingale} if $\E[|X_n|]<\infty$ and $\E[X_{n+1}{}\mid{}X_1,\ldots, X_n]\geq X_{n}$.
- \item (Stopping time). Let $\{Z_k\}_k$ be a random process and $T$ a stopping time. 
+ \item \label{it:stopping_time}
+       (Stopping time). Let $\{Z_k\}_k$ be a random process and $T$ a stopping time. 
        Define $X_k(\omega) = Z_{k\wedge T(\omega)}$, that is
        \[
         X_k(\omega) = \begin{cases}
@@ -1992,8 +2129,12 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
                       \end{cases}
        \]
        If $Z$ is a (sub-) martingale, then $X$ is a (sub-) martingale too.
- \item (Doob's optimal stopping theorem). Let \((X_n)_n\) be a super-martingale and \(T\) be a stopping 
-       time. Then \(X_T\) is integrable and \(\E[X_T] \leq \E[X_0]\) in each of the following cases
+ \item (Stopped martingales are martingales). Let \((X_n)_n\) be a martingale. 
+       Let $\tau$ be a stopping time. Then $\tilde{X}_n = X_{n \wedge \tau}$
+       is a martingale. 
+ \item (Doob's optional stopping theorem). Let \((X_n)_n\) be a super-martingale and \(T\) be a 
+       \hyperlink{link:stopping_time}{stopping time}. 
+       Then \(X_T\) is integrable and \(\E[X_T] \leq \E[X_0]\) in each of the following cases
 	  \begin{enumerate}[i.]
 	   \item \(T\) is bounded 
 	   \item \(X\) is bounded and \(T\) is almost surely finite
@@ -2005,7 +2146,41 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 	   \item \(X_n\geq 0\) for all \(n\) and \(T\) is almost surely finite
 	  \end{enumerate}
 
- \item (Martingale stopping).
+ \item (\hypertarget{link:ost2}{Optional stopping theorem, version 2}). 
+       Let \((X_t)_t\) be a martingale on \(\ofp\) subject  
+       to a filtration \(\mathfrak{F} = (\F_t)_t\) and let \(\tau\) be a 
+       \hyperlink{link:stopping_time}{stopping time}. Assume that one of the following holds
+       \begin{enumerate}[i.]
+        \item \(\tau\) is almost surely bounded, that is, there is a \(\bar\tau\geq 0\),
+              so that \(\tau(\omega) \leq \bar\tau\) for \(\prob\)-almost all \(\omega\)%
+              \footnote{This is a strong condition which is often not satisfied in practice.
+              However, for fixed $N\in\N$, $\tau \wedge N$ is a stopping time. 
+              We often apply the optional stopping theorem for the bounded stopping 
+              time $\tau \wedge N$ and take $N\to\infty$.}
+        \item \(\E[\tau]\) is finite and \(\E[|X_{k} - X_{k}| {}\mid{} \F_k]\) is almost 
+              surely bounded, uniformly in \(k\),
+        \item \(|X_{\min(t, \tau)}|\) is almost surely bounded,
+       \end{enumerate}
+       Then \(X_{\tau}\) is almost surely a well-defined random variable and 
+       \[\E[X_\tau] = \E[X_0].\]
+       If \(X\) is assumed to be a super-martingale, then 
+       \[\E[X_\tau] \leq \E[X_0].\]
+       If \(X\) is assumed to be a sub-martingale, then 
+       \[\E[X_\tau] \geq \E[X_0].\]
+       
+ \item (\hypertarget{link:ost3}{Optional stopping theorem}, more general version).
+       Let \((X_t)_t\) be a martingale on \(\ofp\) subject  
+       to a filtration \(\mathfrak{F} = (\F_t)_t\) and let \(\tau\) be a 
+       \hyperlink{link:stopping_time}{stopping time}.
+       Suppose that $X$ is \hyperlink{link:uniformly_integrable}{uniformly integrable} 
+       (then, it has a well-defined limit, $X_\infty$
+       so we may define $\bar{X}_\tau = X_{\tau}1_{\tau < \infty} + X_{\infty}1_{\tau = \infty}$).
+       Let $\tau' \leq \tau$ be two stopping times. Then,
+       \[
+        \E[X_\tau {}\mid{} \F_{\tau'}] = X_{\tau'}.
+       \]
+
+
  \item (Almost sure martingale convergence). Let $(X_n)_n$ be a martingale which is uniformly 
        bounded in $\mathcal{L}_1$, i.e., $\sup_n \E[|X_n|] < \infty$. Then, there is a $X\in\mathcal{L}_1(\mathcal{F}_\infty)$,
        so that $X_n\to X$ a.s., where $\mathcal{F}_\infty = \sigma(\mathcal{F}_n, n\geq 0)$.
@@ -2035,21 +2210,116 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
        \[
         \prob[X_N-X_0\leq -t] \leq \exp \left(-\frac{t^2}{2\sum_{i=1}^{N}c_i^2}\right)
        \]
-
+ \item (Martingale inequalities). Let \((X_t)_{t\geq 0}\) be a \hyperlink{link:cadlag}{c\`adl\`ag} 
+       martingale and \(t > 0\). Define \(X_t^* = \sup_{s \leq t} |X_s|\). Then, for every \(t > 0\)
+       \begin{enumerate}[i.]
+        \item for \(\alpha > 0\), \(\prob[ X_t^* \geq \alpha] \leq \frac{\|X_t\|_1}{\alpha}\) 
+        \item for \(p > 1\), \(\|X_t^*\|_p  \leq \frac{p}{p-1} \|X_t\|_p\) 
+       \end{enumerate}
+ \item (Nonnegative submartingale inequalities). Let \((X_t)_{t\geq 0}\) be a nonnegative 
+       \hyperlink{link:cadlag}{c\`adl\`ag} 
+       submartingale and \(t > 0\). Define \(X_t^* = \sup_{s \leq t} |X_s|\). 
+       Then, for every \(t > 0\)
+       \begin{enumerate}[i.]
+        \item for \(\alpha > 0\), \(\prob[ X_t^* \geq \alpha] \leq \frac{\|X_t\|_1}{\alpha}\) 
+        \item for \(p > 1\), \(\|X_t^*\|_p  \leq \frac{p}{p-1} \|X_t\|_p\) 
+       \end{enumerate}
+       
 \end{enumerate}
 
+\section{Random walk}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.55\textwidth]{figures/randomWalk}
+ \caption{Random walk: two different paths, \((X_t(\omega_1))_t\) and \((X_t(\omega_2))_t\).}
+ \label{fig:random_walk}
+\end{figure}
+\begin{enumerate}
+ \item (One-dimensional random walk). Take a sequence of independent random variables \((Z_{t})_{t\in\N}\) that take 
+       values in \(\{-1, 1\}\), each with probability \(\nicefrac{1}{2}\). Define a random process 
+       \((X_t)_{t\in \N}\) with \(X_0=0\) and \(X_t = \sum_{i=1}^{t}Z_i\). The process \((X_t)_{t\in \N}\) is called
+       a (one-dimensional) (simple) random walk on \(\mathbb{Z}\). A random walk is shown in Figure~\ref{fig:random_walk}.              
+       
+       More generally, a random walk can be such that \(p\dfn\prob[Z_{t+1} - Z_{t} = 1] \neq \prob[Z_{t+1} - Z_{t} = -1]\).
+       
+       
+       
+ \item (Characteristics). The expectation of random walk \((X_t)_{t\in\N}\) with \(p=\nicefrac{1}{2}\) 
+       is \(\E[X_t]=0\) and its variance is \(\E[X_t^2] = t\). Additionally,
+       \[
+        \lim_{t}\frac{\E[X_t]}{\sqrt{t}} = \sqrt{\frac{2}{\pi}}.
+       \]              
 
-\section{Brownian motion and Wiener processes}
+
+
+ \item (Distribution of \(X_t\)). Let \((X_t)_t\) be a one-dimensional random walk with 
+       \(p\dfn \prob[X_{t+1} - X_{t} = 1]\) and define \(q \dfn 1-p\). 
+       For \(t\in\N\), \(t\geq 1\), random variables \(X_t\) take values on 
+       \(\mathcal{X}_t \dfn \{-t, -t+2, \ldots, t-2, t\}\) and their distribution is given by
+       \[
+        \prob[X_t = m] = {t \choose \tfrac{1}{2}(t+m)} p^{\tfrac{1}{2}(t+m)} q^{\tfrac{1}{2}(t-m)},
+       \]
+       for all \(m \in \mathcal{X}_t\)
+       This is the Binomial distribution on \(\mathcal{X}_t\) with parameter \(p\) 
+       (See definition in Section \ref{sec:binomial_distribution}).
+       
+ \item (Maximum of random walk). Let \(X_t\) be a simple symmetric random walk (with \(p=0.5\)
+       and define \(M_t = \max_{t'\leq t}X_{t'}\). Then, \(M_0=0\), the support of \(M_t\) is 
+       \(\{0,1,\ldots, t\}\) and 
+       \[
+        \prob[M_t = m] = \prob[X_t = m] + \prob[X_t = m+1] = {t \choose {\lfloor \tfrac{t+m+1}{2}\rfloor} }2^{-t}
+       \]
+       
+ \item (Infinite often visits). 
+       Almost surely, the one-dimensional simple random walk visits every integer $n\in\N$
+       infinitely often.
+       
+ \item (As a Markov chain). The one-dimensional random walk can be seen as a Markov chain with 
+       states in $\mathbb{Z}$ and $\prob[X_{k+1}=i+i\mid X_{k}=i] = p$ and $\prob[X_{k+1}=i-i\mid X_{k}=i] = 1-p$.
+       
+ \item (Probability to reach upper bound before lower bound). 
+       Let $(X_n)_n$ be a simple random walk starting at $x\in\mathbb{Z}$, that is, $X_0 = x$.
+       Let $a < x < b$ for some $a,b\in\mathbb{Z}$. Let $\tau_a = \inf\{n\in\mathbb{Z} \mid X_n = a\}$
+       and $\tau_b = \inf\{n\in\mathbb{Z} \mid X_n = b\}$. Then
+       \[
+        \prob[\tau_a < \tau_b] = \frac{x-a}{b-a}.
+       \]
+
+ \item (Average time to exit interval). Let $(X_k)_k$ be a random walk with $X_0 = x$.
+       Suppose $x\in [a,b]$ with $a,b\in\mathbb{Z}$. Define the stopping time 
+       $\tau = \inf\{n\in\N \mid X_n \in \{a,b\}\}$ (therefore, $X_\tau\in\{a,b\}$).
+       Define the stochastic process
+       \[
+        Y_n = n + (X_n-a)(b - X_n).
+       \]
+       Let \(\F_n\) be the sigma algebra generated by $(X_k)_{k=0}^{n}$.
+       Then, 
+       \begin{enumerate}
+        \item \(\tau\) is an almost surely bounded stopping time
+        \item \((Y_n)_n\) is an $(\F_n)_n$-martingale
+        \item \(Y_0 = (x-a)(b-x)\) and \(Y_\tau = \tau\)
+        \item From the (general) \hyperlink{link:ost3}{optional stopping theorem}, 
+              $\E[\tau] = \E[Y_\tau] = \E[Y_0] = (x-a)(b-x)$
+       \end{enumerate}
+
+       
+ \item (Gaussian random walk). Take a sequence of independent random variables \(Z_{t}\) with \(Z_t\sim\mathcal{N}(\mu, \sigma^2)\).
+       The random process \((X_t)_t\) with \(X_0=0\) and \(X_t = Z_1+\ldots+Z_t\) is called Gaussian random walk.
+       It is \(X_t\sim \mathcal{N}(t\mu, t\sigma^2)\).       
+\end{enumerate}
+
+\section{Brownian motion}
 \begin{enumerate}
  \item (Definition). A stochastic process \((X_t)_{t\in \Re_+}\) on \((\Re, \mathcal{B}(\Re))\) is 
- called Brownian motion if it is continuous and has stationary independent increments. A process 
+ called \hypertarget{link:brownian_motion}{Brownian motion} if it is continuous and has stationary independent increments. A process 
  \((W_t)_{t\in\Re_+}\) is called a Wiener process if it is a Brownian motion with 
  \begin{enumerate}[i.]
   \item \(W_0 = 0\)
   \item \(\E[W_t] = 0\)
   \item \(\E[W_t^2] = t\) for all \(t\in\Re_+\)
  \end{enumerate}
-  \item (Definition according to \O{}ksendal). Following Kolmogorov's extension theorem,
+  \item (Definition according to \O{}ksendal). 
+        Following \hyperlink{link:kolmogorov_extension_thm}{Kolmogorov's extension theorem},
         for given time instants \(t_1, \ldots, t_k\) in a time set \(T\) (typically \(T=[0, \infty)\)),
         define the following proability measure on \(\Re^{nk}\)
         \[
@@ -2062,7 +2332,7 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 	\[
 	 p(t, x, y) {}={} (2\pi t)^{-n/2}\exp\left(-\tfrac{\|x-y\|^2}{2t}\right).
 	\]
-	Let \(\ofp\) be the associated probability space from Kolmogorov's extension theorem 
+	Let \(\ofp\) be the associated probability space from Following \hyperlink{link:kolmogorov_extension_thm}{Kolmogorov's extension theorem} 
 	and let \((B_t)_t\) be an \(\Re^{n}\)-valued stochastic process with 
 	\[
 	 \prob[B_{t_1} \in F_1, \ldots, B_{t_k} \in F_k] = \nu_{t_1,\ldots, t_k}(F_1\times \cdots \times F_k).
@@ -2087,35 +2357,87 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
 	\[
 	 \E[(B_t - x)(B_s - x)] = n \min(s,t).
 	\]
- \item (Existence of continuous version). The Brownian motion satisfies Kolmogorov's continuity theorem 
-       (see item \ref{it:kolmogorov-cont-theorem} in Section \ref{sec:stoch-proc-general}) with \(\alpha = 4\), 
-       \(\beta = 1\) and \(L = n(n+2)\). In particular, 
+ \item (Existence of continuous version). 
+       The Brownian motion satisfies 
+       \hyperlink{link:kolmogorov_continuity_thm}{Kolmogorov's continuity theorem} 
+       with \(\alpha = 4\), \(\beta = 1\) and \(L = n(n+2)\). In particular, 
        \(
 	      \E[\|X_{\tau} - X_{\tau'}\|^4] 
 	{}={} 
 	      n(n+2) |\tau' - \tau|^2.
 	\)
- \item (Zero crossing). The Brownian motion crosses the time axis infinitely often in every time interval
-       \((0, t)\) for \(t>0\).
+ \item (Zero crossing). 
+       Properties:
+       \begin{enumerate}[i.]
+        \item Define the set of zero crossing times, $Z_0 = \{t\geq 0 \mid B_t = 0\}$.
+              With probability 1, the Lebesgue measure of $Z_0$ is zero,
+        \item Almost surely, $Z_0$ is a closed set and has no isolated points,              
+        \item 
+        \item The Brownian motion crosses the time axis infinitely often in every time interval
+              \((0, t)\) for \(t>0\).
+       
+       \end{enumerate}
+
+       
        
  \item (Distribution of maximum). Let \(X_t\) be a Brownian motion and \(M_t = \max_{s \leq t} X_s\).
        Then, for all \(t>0\) and \(a>0\),
        \[
         \prob[M_t \geq a] = 2\prob[X_t \geq a] = 2(1-\Phi(a/\sqrt{t})).
        \]
-
+ 
+ \item (Attainment of maximum 1). Almost surely, the set of times where $B_t$ attains a local maximum 
+       is dense in $[0, +\infty)$
+       
+ \item (Attainment of maximum 2). On any interval, $B_t$ almost surely does not attain the same 
+       maximum.
+       
+ \item (Strict maximum). Almost surely, every local maximum of a Brownian motion is a strict
+       local maximum.
+       
+ \item (Countability of the set maximum times). Almost surely, the set of times when $B_t$ attains
+       a local maximum is countable.
+       
+ \item (Maxima are distinct). The local maxima of $B_t$ are almost surely distinct
+ 
  \item (Nowhere differentiable). For every \(\omega\in\Omega\), \(t\mapsto X_t(\omega)\) is 
         nowhere differentiable.
  \item (Orthogonal transformation). Let \(B_t\) be an \(n\)-dimensional Brownian motion starting at \(0\) and 
        \(U\) be an orthogonal matrix, \(UU^{\top} = I\). Them,
        \(\tilde{B}_t = UB_t\) is a Brownian motion.
- \item (Brownian scaling).   Let \(B_t\) be an \(n\)-dimensional Brownian motion and \(c>0\).
+ \item (Brownian scaling).   Let \(B_t\) be an \(n\)-dimensional Brownian motion starting at \(0\) and \(c>0\).
        Then, \(\hat{B}_t = \nicefrac{1}{c}B_{c^2 t}\) is a Brownian motion.       
  \item (Time inversion). Let \(B_t\) be an \(n\)-dimensional Brownian motion starting at \(0\) and 
        \((\breve{B}_t)_t\) is a process with \(\breve{B}_0 = 0\) and \(\breve{B}_t = t B_{1/t}\).
        Then \(\breve{B}\) is a Brownian motion.
+ \item (\hypertarget{link:ibm}{Integrated Brownian motion}). 
+        The integral of the one-dimensional Brownian motion starting at \(0\), 
+        \(\mathrm{ibm}(t, \omega) {}\dfn{} \int_0^t B_s(\omega) \d s\), is a random variable 
+       which follows the normal distribution \(\mathcal{N}(0, t^3/3)\).
+ \item (Exit time). Let \((B_t)_t\) be a one-dimensional Brownian motion on \(\ofp\) 
+	started at \(0\) and define \(\tau(\omega) = \inf \{t\in T {}\mid{} 
+	B_t \notin [-a, b]\}\), where \(a,b > 0\).
+	This means that \(\tau\) is the first time when the process leaves 
+	the interval \([-a, b]\).
+	Then, 
+	\begin{enumerate}[i.]
+	 \item \(\tau\) is an integrable random variable
+	 \item \(\E[\tau] = ab\)
+	 \item \(\E[W_{\tau}] = 0\) and \(\E[W_{\tau}^2] = \E[\tau] = ab\)
+	 \item \(\prob[W_\tau = -a] = \frac{b}{a+b}\) and \(\prob[W_\tau = b] = \frac{a}{a+b}\)
+	\end{enumerate}
 \end{enumerate}
-
+Note. We often need to evaluate the expectation of a transformation of the Brownian motion, 
+$Y_t = f(B_t)$. Using the fact that $B_t$ is 
+\hyperlink{link:normal-distribution}{normally distributed} at every $t$ and the 
+\hyperlink{link:lotus}{law of the unconscious statistician}, 
+\[
+ \E[f(B_t)] = \frac{1}{\sqrt{2\pi t}}\int_{-\infty}^{\infty}f(x)e^{-\frac{x^2}{2t}}\d x,
+\]
+provided $f(B_t)$ is integragle. 
+Similarly, we may need to evaluate $\E[\int_0^t f(B_s)\d s] = \int_0^t \E[f(B_s)]\d s
+= \int_0^t \frac{1}{\sqrt{2 \pi s}}\int_{-\infty}^{\infty}f(x) e^{-\frac{x^2}{2s}}\, \d x\, \d s$
+(using \hyperlink{link:fubini}{Fubini's Theorem}).
 
 
 \section{Markov processes}
@@ -2263,8 +2585,7 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
  \[
     \prob_\nu^\pi[x_{t+1}\in B{}\mid{}x_0,\ldots,x_t] = \prob_{\nu}^{\pi}[x_{t+1}\in B{}\mid{}x_t] = Q(B, x_t, \phi),
  \]
- so $\{x_t\}_t$ is a time-homogeneous Markov process.
- 
+ so $\{x_t\}_t$ is a time-homogeneous Markov process. 
 \end{enumerate}
 
 \subsection{Optimal control problems}
@@ -2278,7 +2599,8 @@ Then, \(\E[X_1\mid X_2=x_2] \sim \mathcal{N}(\mu(x_2), \Sigma)\) with
     \sum_{t=0}^{N-1}c(x_t, u_t) + c_N(x_N) {}\Big|{} x_0 = x
   \bigg]
  \end{align*}
- \item \label{item:mdp:dp_theorem}(DP Theorem). Define the function $J_N(x) = c_N(x)$ and for $t=N-1,N-2,\ldots, 0$, 
+ \item \label{item:mdp:dp_theorem}
+ (\hypertarget{link:dp_thm}{DP Theorem}). Define the function $J_N(x) = c_N(x)$ and for $t=N-1,N-2,\ldots, 0$, 
  \[
   J_t(x) \dfn \min_{U(x)} 
       c(x,u) + \int_{\mathcal{X}}J_{t+1}(\chi)Q(\d\chi, x, u),
@@ -2294,8 +2616,8 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
  \[
   J^\star(x) = J_0(x) = J(\pi^\star, x)
  \]
- \item (Measurable selection theorem 1). There exists a measurable selection \(u_t^\star\) 
-       in the above DP theorem (item \ref{item:mdp:dp_theorem}), if 
+ \item (\hypertarget{link:mst1}{Measurable selection theorem 1}). There exists a measurable selection \(u_t^\star\) 
+       in the above \hyperlink{link:dp_thm}{DP theorem}, if 
        \begin{enumerate}[i.]
         \item (Control constraints). \(U\) is compact-valued (i.e., for every \(x\), \(U(x)\) is compact)
         \item (Cost function). \(c(x, {}\cdot{})\) is lower semicontinuous on \(U(x)\) for every \(x\in\mathcal{X}\)
@@ -2310,9 +2632,10 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
        \end{enumerate}
 
        
-  \item \label{item:mdp:meas_sel_thm_two} (Measurable selection theorem 2). 
+  \item \label{item:mdp:meas_sel_thm_two} 
+  (\hypertarget{link:mst2}{Measurable selection theorem 2}). 
        There exists a measurable selection \(u_t^\star\) 
-       in the above DP theorem (item \ref{item:mdp:dp_theorem}), if 
+       in the above \hyperlink{link:dp_thm}{DP theorem}, if 
        \begin{enumerate}[i.]
         \item (Control constraints). \(U\) is compact-valued (i.e., for every \(x\), \(U(x)\) is compact)
               and the multi-valued function \(x\mapsto U(x)\) is upper semi-continuous
@@ -2327,19 +2650,297 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
               \end{enumerate}
        \end{enumerate} 
        
- \item (Measurable selection theorem 3). There exists a measurable selection \(u_t^\star\) 
-       in the above DP theorem (item \ref{item:mdp:dp_theorem}), if 
+ \item (\hypertarget{link:mst3}{Measurable selection theorem 3}). There exists a measurable selection \(u_t^\star\) 
+       in the above \hyperlink{link:dp_thm}{DP theorem}, if 
        \begin{enumerate}[i.]
         \item (Cost function). The stage cost \(c\) is lower semi-continuous, bouned below and inf-compact
                on \(K\), that is, for every \(x\in \mathcal{X}\) and \(r\geq 0\), the set 
                \(\{u\in U(x) {}\mid{} c(x,u)\leq r\}\) is compact (in other words, \(c\) has compact 
                level sets)
         \item (Transition kernel). Condition \ref{item:mdp:meas_sel_thm_two:transition_kernel} in 
-              Measurable Section Theorem 2 (item \ref{item:mdp:meas_sel_thm_two}) holds.
+              \hyperlink{link:mst2}{Measurable Selection Theorem 2} holds.
         \end{enumerate}
 \end{enumerate}
 
-\subsection{LQR problems}
+\subsection{Linear-Quadratic problems}
+
+
+\comingSoon
+
+
+\chapter{Stochastic Differential Equations}
+\section{It{\^{o}} Integral}
+\begin{enumerate}
+ \item (Class \(\mathcal{V}\)). Let \((\Omega, \mathcal{F}, \mathfrak{F}, \prob)\) be a filtered probability space
+       where \(\mathfrak{F} = (\mathcal{F}_t)_{t\in T}\) is a filtration, 
+       \(T = [0, +\infty) \) and \(t, t' \in T\) with \(t < t'\). 
+       We define the class \(\mathcal{V} = \mathcal{V}(t,t')\) to be a class of functions 
+       \(f(t, \omega): T \times \Omega \to \Re\) with 
+       \begin{enumerate}[i.]
+        \item \(f\) is \(\mathcal{B}\times \mathcal{F}\)-measurable where \(\mathcal{B}\) is the 
+              Borel \(\sigma\)-algebra on \(T\)
+	\item \(f(t, \omega)\) is \(\mathfrak{F}\)-adapted
+	\item \(\E\int_{t}^{t'} f(t,\omega)^2 \d t {}<{} \infty\)
+       \end{enumerate}
+       
+ \item (It\^{o} integral for elementary functions). 
+       Let \((B_t)_{t\geq 0}\) be the standard \hyperlink{link:brownian_motion}{Brownian motion} 
+       on the filtered probability space \((\Omega, \F, \{\F_t\}_{t\geq 0}, \prob)\) and \(\phi\) be 
+       an elementary function of class \(\mathcal{V}(t, t')\), that is,
+       \[
+        \phi(t, \omega) = \sum_{i}e_i(\omega) 1_{[t_i, t_{i+1})}(t),
+       \]
+       where \(e_i\) is \(\F_{t_i}\)-measurable.
+       We define the It\^{o} integral of \(\phi\) from \(t\) to \(t'\) 
+       to be the random variable
+       \[
+        \int_t^{t'} \phi(t, \omega) \d B_t = \sum_i e_i(\omega) (B_{t_{i+1}}(\omega) - B_{t_i}(\omega))
+       \]
+       
+
+ \item  (It\^{o} integral on \(\mathcal{V}(t, t')\)).
+        Let \((B_t)_{t\geq 0}\) be the standard \hyperlink{link:brownian_motion}{Brownian motion} 
+       on \((\Omega, \F, \{\F_t\}_{t\geq 0}, \prob)\) and \(f \in \mathcal{V}(t, t')\). Let \(\phi_n\)
+       be a sequence of elementary functions which converges to \(f\) in the following sense:
+       \[
+        \E \left[\int_{t}^{t'}(\phi_n(s, \omega) - f(s, \omega))^2\d s\right] \to 0.
+       \]
+       Then,
+       \[
+        \int_{t}^{t'} f(s, \omega)\d B_s = \lim_{n\to \infty} \int_{t}^{t'} \phi_n(s, \omega)\d B_s,
+       \]
+       where the limit is in the \(L^2\ofp\) sense.
+
+ \item (Properties of the It\^{o} integral).
+       The It\^{o} integral has the following properties (for all \(f, g \in \mathcal{V}(t,t')\))
+       \begin{enumerate}[i.]
+        \item (Break down). \(\int_{t}^{t'} f(s, \omega) \d B_s 
+        {}={} 
+        \int_{t}^{t''} f(s, \omega) \d B_s 
+        {}+{} 
+        \int_{t''}^{t'} f(s, \omega) \d B_s\), 
+        for almost all \(\omega\)
+        \item (Linearity). \(\int_{t}^{t'} (cf + g) \d B_s = c \int_{t}^{t'} f \d B_s + \int_{t}^{t'} g \d B_s\), 
+        for almost all \(\omega\), where \(c\) is a constant
+        \item (Zero expectation). \(\E \left[ \int_{t}^{t'} f(s, \omega) \d B_s \right] = 0\)
+        \item (Measurability). \(\int_{t}^{t'} f(s, \omega) \d B_s\) is \(\F_{t'}\)-measurable
+        \item (\hypertarget{link:ito-isometry}{Isometry} property). \(\E[(\int_{t}^{t'} f(s, \omega) \d B_s)^2] 
+        {}={} \E[\int_{t}^{t'} f(s, \omega)^2 \d s]\)
+        \item (Martingale). \(M_t(\omega) = \int_{0}^{t} f(s, \omega) \d B_s\) is a martingale with respect to 
+              the filtration \((\F_t)_t\) and \(\prob\) and \(t \mapsto M_t(\omega)\) is almost surely continuous. 
+              As a result, Doob's martingale theorem applies, that is 
+              \[
+               \prob[|M_t| \geq  t] \leq \frac{1}{t^2}\E[\int_{0}^{t} f(s, \omega)^2 \d s]
+              \]
+
+       \end{enumerate}
+
+       
+ \item (It\^{o} process). The stochastic process \(X_t\) given by 
+       \[
+        X_t = X_0 + \int_0^t u(s, \omega)\d s + \int_0^t v(s, \omega) \d B_s,
+       \]
+       where \(v\) is an It\^o-integrable function with \(\prob[\int_0^t v^2 \d s < \infty, \forall t \geq 0] = 1\), 
+       is called an It\^{o} process.
+       Such a process is also written in the following shorter differential form
+       \[
+        \d X_t = u \d t + v \d B_t.
+       \]
+       
+ \item (Multi-dimensional It\^{o} process).
+       Let \(B_t\) be an \(m\)-dimensional Brownian motion and 
+       \[
+        \d X_t = u \d t + V \d B_t
+       \]
+       where 
+       \(u(t, \omega) = [u_1(t, \omega) ~ \cdots u_n(t, \omega)]^{\top}\), 
+       \(V = (V_{i,j}(t, \omega))_{i,j}\) is an \(n\)-by-\(m\) matrix where \(V_{i,j}\) are 
+       It\^o-integrable functions,
+       \(\d B_t = [\d B_{1,t} ~ \cdots ~ \d B_{m,t}]^{\top}\) and 
+       \(X_t = [X_{1,t} ~ \cdots ~ X_{n,t}]^{\top}\).
+       In other words,
+       \[
+        \begin{bmatrix}
+         \d X_{1,t} 
+         \\ 
+         \d X_{2,t} 
+         \\
+         \vdots 
+         \\ 
+         \d X_{n,t}
+        \end{bmatrix}
+        {}={}
+        \begin{bmatrix}
+         u_1 \\ u_2 \\ \vdots \\ u_n
+        \end{bmatrix}
+        \d t
+        {}+{}
+        \begin{bmatrix}
+         V_{1,1} & \cdots & V_{1,m}
+         \\
+         \vdots & \ddots & \vdots 
+         \\
+         V_{n,1} & \cdots & V_{n,m}
+        \end{bmatrix}
+        \begin{bmatrix}
+         \d B_{1,t} \\ \d B_{2,t} \\ \vdots \\ \d B_{m,t}
+        \end{bmatrix}.
+       \]
+       This is called an \(n\)-by-\(m\)-dimensional It\^{o} process.
+       
+       
+ \item (It\^{o} formula --- \(1\)-dimensional). 
+       Let \(X_t\) be an It\^{o} process, \(\d X_t = u \d t + v \d B_t\), and let
+       \(g\in C^2([0,+\infty)\times \Re)\). Define \(Y_t = g(t, X_t)\). Let us denote the partial 
+       derivative of \(g\) wrt \(t\) by \(g_t\) and let, likewise, \(g_x(t, x) = \frac{\partial g}{\partial x}g(t, x)\)
+       and \(g_{xx}(t, x) = \frac{\partial g}{\partial x}g_x(t, x)\). Then,
+       \[
+        \d Y_t = g_t(t, X_t) \d t 
+               + g_x(t, X_t) \d x
+               + \tfrac{1}{2} g_{xx}(t, X_t) (\d X_t)^2,
+       \]
+       with the calculus rules \(\d t \cdot \d t = \d t \cdot \d B_t = \d B_t \cdot \d t = 0\)
+       and \(\d B_t \cdot \d B_t = \d t\).
+       
+       
+ \item (It\^{o} formula --- multi-dimensional).
+       Let \(B_t\) be an \(m\)-dimensional Brownian motion and 
+       \[
+        \d X_t = u \d t + V \d B_t
+       \]
+       be an \(n\)-by-\(m\)-dimensional It\^{o} process. Let \(g\) be a \(C^2([0,\infty)\times \Re^n; \Re^p)\)
+       map and \(Y_t = g(t, X_t)\). Then,
+       \[
+	    \d Y_{k, t} 
+        {}={} 
+	    \frac{\partial g_{k}}{\partial t}(t, X_t) \d t
+	{}+{}
+	    \sum_{i}\frac{\partial g_k}{\partial x_i}(t, X_t) \d X_i
+	{}+{}
+	    \tfrac{1}{2}\sum_{i,j}\frac{\partial^2 g_k}{\partial x_i \partial x_j}(t, X_t)\d X_i \d X_j,
+       \]
+       where \(\d B_i \d B_j = \delta_{i,j}\d t\), \(\d B_i \d t = \d t \d B_i = 0\).
+
+       
+ \item (Examples). Here are a few examples:
+ \begin{enumerate}[i.]
+  \item Take \(g(t,x)=\tfrac{1}{2}x^2\) and \(X_t = B_t\). Then, \(\d Y_t = B_t \d B_t + \tfrac{1}{2}\d t\), 
+        which leads to 
+        \[
+         \tfrac{1}{2} B_t^2 = \int B_s \d B_s + \tfrac{1}{2}t.
+        \]
+  \item By taking \(X_t = B_t\) and \(g(t,x) = tx\) we obtain 
+  \[
+   \int_0^t s \d B_s = tB_t - \int_0^t B_s \d s,
+  \]
+  where \(\int_0^t B_s \d s\) is an \hyperlink{link:ibm}{integrated Brownian motion}.
+ \item By taking \(X_t = B_t\) and \(g(t,x) = \tfrac{1}{3}x^3\), we obtain 
+ \[
+  \int_0^t B_s^2 \d B_s = \tfrac{1}{3}B_t^3 - \int_0^t B_s \d s.
+ \]
+ \item (Integration by parts). Let \(X_t\) and \(Y_t\) be two It\^{o} processes. 
+       Then,
+       \[
+        \d(X_t Y_t) = X_t \d Y_t + Y_t \d X_t + \d X_t \d Y_t,
+       \]
+       in other words,
+       \[
+        \int_0^t X_s \d Y_s = X_t Y_t - X_0 Y_0 - \int_0^t Y_s \d X_s - \int_0^t \d X_s \d Y_s
+       \]
+ \item (Exponential). Let \(\theta(t, \omega)\) be an \(n\)-dimensional random process
+       with \(\theta_i(t,\omega) \in \mathcal{V}([0,T])\) for \(i=1,\ldots, n\) with \(T\leq \infty\).
+       Define 
+       \[
+        Z_t = \exp \left\{ 
+        \int_0^t \theta(s,\omega) \d B_s 
+        {}-{}
+        \tfrac{1}{2}\int_0^t \theta^2 (s,\omega) \d s
+        \right\},
+       \]
+       for \(t\in [0,T]\). Then,
+       \[
+        \d Z_t = Z_t \theta(t, \omega) \d B_t
+       \]
+ \end{enumerate}
+ \item (Ito integrals of deterministic functions). 
+ Let $g:[0, T]\to\Re$ be a Borel-measurable function. For every $t\geq 0$, the random variable 
+ \[
+  X_t(\omega) = \int_0^t g(s) \d B_s(\omega),
+ \]
+ is normally distributed with zero mean and variance 
+ $\mathrm{Var}[X]{}={} \int_0^t g(s)^2 \d s$.
+
+ \item (Expectation of product of It\^o integrals). Let $(X_t)_t$,  $(Y_t)_t$ be two 
+       stochastic processes on the filtered probability space \((\Omega, \F, \{\F_t\}_{t\geq 0}, \prob)\) so that 
+       $X_t$ and $Y_{t}$ are in $\mathcal{V}(0, T)$ for some $T>0$. Then, for $0 \leq t \leq T$
+       \[
+        \E\left[\int_0^t X_s \d B_s \int_0^t Y_s \d B_s\right] = \int_0^t \E[X_s Y_s]\d s
+       \]
+
+\end{enumerate}
+
+
+\begin{table}[ht]
+\caption{Application of It\^o's formula}
+\begin{center}
+{
+  \renewcommand{\arraystretch}{2.0}
+  \begin{tabular}{ p{3cm} | p{5cm} }
+  $X_t$     & $\d X_t = u \d t + v \d B_t$\\ \hline 
+  $B_t$     & $\d B_t$\\ 
+  $B_t^2$   & $2 B_t \d B_t + \d t$\\ 
+  $B_t^2 - t$ & $2 B_t \d B_t$\\ 
+  $B_t^3$   & $3 B_t^2 \d B_t + 3 B_t \d t$\\ 
+  $e^{B_t}$ & $e^{B_t}\d B_t + \tfrac{1}{2}e^{B_t}\d t$ \\
+  $e^{B_t - \tfrac{1}{2}t}$ & $e^{B_t - \tfrac{1}{2}t} \d B_t$\\
+  $e^{\tfrac{1}{2}t}\sin B_t$ & $e^{\tfrac{1}{2}t} \cos B_t \d B_t$ \\
+  $e^{\tfrac{1}{2}t}\cos B_t$ & $-e^{\tfrac{1}{2}t} \sin B_t \d B_t$\\
+  $(B_t + t) e^{-B_t - \tfrac{1}{2}t}$ & $(1 - B_t - t) e^{-B_t - \tfrac{1}{2}t} \d B_t$
+  \end{tabular}
+}
+\end{center}
+\end{table}
+
+
+\begin{table}[ht]
+\caption{Stochastic integrals --- we denote by \(B_t\) the standard Brownian motion with \(B_0=0\)
+         and \(\mathrm{ibm}(t, \omega) \dfn \int_0^t B_s \d s\) is the integrated Brownian motion.}
+\begin{center}
+{
+  \renewcommand{\arraystretch}{2.0}
+  \begin{tabular}{ p{3cm} | p{4cm} | p{3cm}}  
+  Stochastic Integral & Result & Variance\\ \hline
+  \(\int_0^t \d B_s\) & \(B_t\) & $t$\\
+  \(\int_0^t s \d B_s\) & \(tB_t - \mathrm{ibm}(t, \omega)\) & $\frac{1}{3}t^3$\\
+  \(\int_0^t B_s \d B_s\) & \(\tfrac{1}{2} B_t^2 - \tfrac{1}{2}t\) & $\frac{1}{2}t^2$\\
+  \(\int_0^t B_s^2 \d B_s\) & \(\tfrac{1}{3}B_t^3 - \mathrm{ibm}(t, \omega)\) & $3t^3$\\
+  \(\int_0^t B_s^k \d B_s\) & \(\tfrac{1}{k+1}B_t^{k+1} - k \int_0^t B_s^{k-1}\d s \)\\
+  \(\int_0^t e^{B_s - \nicefrac{s}{2}}\d B_s\) & \(e^{B_t - \nicefrac{t}{2}} - 1\) & \(e^{t}-1\) 
+%   \(\int_0^t e^{\nicefrac{s}{2}}\cos B_s \d B_s\) & \(e^{\nicefrac{t}{2}}\sin B_t\) & \\
+%   \(\int_0^t e^{\nicefrac{s}{2}}\sin B_s \d B_s\) & \(1 - e^{\nicefrac{t}{2}}\cos B_t\) & \\
+  \end{tabular}
+}
+\end{center}
+\end{table}
+
+
+\section{Stochastic differential equations}
+\begin{enumerate}
+ \item (Ornstein-Uhlenbeck process). The stochastic differential equation 
+ \[
+  \d X_t = \mu X_t \d t +  \sigma \d B_t,
+ \]
+ is called the Ornstein-Uhlenbeck process. Its solution is\footnote{Multiply both sides by 
+   $e^{-\mu t}$ and apply Itô's formula on $\d(e^{-\mu t}X_t)$. To find the variance, use the 
+   \hyperlink{link:ito-isometry}{It\^o isometry}.}
+ \[
+  X_t = e^{\mu t}X_0 + \sigma \int_0^t e^{\mu(t-s)}\d B_s,
+ \]
+ with expectation $\E[X_t] = e^{\mu t}X_0$ and variance $\operatorname{Var}[X_t]=\nicefrac{\sigma^2}{2\mu}(e^{2\mu t} - 1)$.
+
+
+\end{enumerate}
+
 
 \chapter{Information Theory}
 \section{Entropy and Conditional Entropy}
@@ -2852,7 +3453,8 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
        \[
         \alpha_j = \nicefrac{1}{\gamma_j} \int_0^1 \psi_j(u) F_{X}^{-1}(F_{\Xi}(u)) \d F_{\Xi}(u),
        \]
-       Then, as \(N\to\infty\), \(X_N\to X\) in probability\footnote{%	      
+       Then, as \(N\to\infty\), \(X_N\to X\) 
+       \hyperlink{link:convergence_in_probability}{in probability}\footnote{%	      
 	      \(X\) can be approximated by projecting on the space spanned by the 
 	      orthogonal polynomials \(\mathcal{M} = \{\psi_i\}_{i=0}^{N}\) leading
 	      to an approximation \(X_N = \sum_{j=0}^{N} \alpha_j \psi_j(\Xi)\), where
@@ -2865,7 +3467,9 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
 	      The integral can be evaluated by quadrature methods.
        }.
 
- \item (Non-intrusive solution) Let \(X\) be a random variable on \(\ofp\) and \(Y=f(X)\). Suppose we have obtained a
+ \item (Non-intrusive solution via linear regression).
+ 
+ \item (Non-intrusive solution via stochastic projection). Let \(X\) be a random variable on \(\ofp\) and \(Y=f(X)\). Suppose we have obtained a
        truncated PC expansion for \(X\). The question uncertainty propagates from \(X\) to \(Y\)
        via \(f\); in other words, what is the distribution of \(Y\). For \(N\in\N\), let \(X_N\) be 
        a PC expansion of \(X\) as follows
@@ -2889,12 +3493,11 @@ Suppose all \(J_t\) are measurable and for all \(t\in\N_{[0,N-1]}\) there
        \)
        where \(u^{(i)}\) are samples from the distribution of \(\Xi\).
 
-
+  \item (Galerkin projection).
+  
+  \item 
 \end{enumerate}
 
-
-
-\subsection{Arbitrary polynomial chaos expansions}
 
 
 \chapter{Bibliography with comments}
@@ -2948,6 +3551,8 @@ Bibliographic references including lecture notes and online resources with some 
  \item \label{cite:CopingWithCopulas} \bibentry{CopingWithCopulas}
  \item \label{cite:copulasSlides} \bibentry{copulasSlides}: a very thorough presentation of 
        copulas along with lots of theoretical results. 
+ \item \label{cite:KaiDhaSpi18} \bibentry{KaiDhaSpi18}: a not very rigorous review, but it offers
+       an overview of basic properties of polynomial chaos expansions
 \end{enumerate}
 }
 
