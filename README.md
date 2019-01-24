@@ -5,6 +5,10 @@ This document is intended to serve as the white pages of general probability
 theory and it can be used for a quick brush up or as a quick reference or 
 cheat sheet, but not as primary tutorial material.
 
+### Read or Download
+
+You may freely read the PDF online and/or download it from [here](https://mathematix.files.wordpress.com/2019/01/uncorrelated.pdf).
+
 ### Author
 [Pantelis Sopasakis](https://alphaville.github.io/)
 
